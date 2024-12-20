@@ -270,7 +270,7 @@ export default function AppLayout() {
                 textDecoration: "none",
               }}
             >
-              FRESH ABSENSI
+              DASHBOARD
             </Typography>
 
             <Typography
@@ -289,7 +289,7 @@ export default function AppLayout() {
                 textDecoration: "none",
               }}
             >
-              FRESH ABSENSI
+              DASHBOARD{" "}
             </Typography>
             <Box
               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
