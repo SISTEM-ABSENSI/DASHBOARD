@@ -20,21 +20,21 @@ export default function ListAttendanceView() {
   const [rowCount, setRowCount] = useState(0);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
-    page: 1,
+    page: 0,
   });
 
   const getTableData = async ({ search }: { search: string }) => {
     try {
       setLoading(true);
       const result = await handleGetTableDataRequest({
-        path: "/attendances", // Path API disesuaikan untuk mengambil data SPG
-        page: paginationModel.page + 1,
+        path: "/attendances",
+        page: paginationModel.page,
         size: paginationModel.pageSize,
         filter: { search },
       });
 
-      if (result && result.data) {
-        setTableData(result.data?.items);
+      if (result) {
+        setTableData(result?.items);
         setRowCount(result.totalItems);
       }
     } catch (error: any) {

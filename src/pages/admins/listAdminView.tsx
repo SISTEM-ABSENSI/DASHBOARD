@@ -32,23 +32,21 @@ export default function ListAdminView() {
   const [rowCount, setRowCount] = useState(0);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
-    page: 1,
+    page: 0,
   });
 
   const getTableData = async ({ search }: { search: string }) => {
-    console.log(paginationModel);
     try {
       setLoading(true);
       const result = await handleGetTableDataRequest({
         path: "/users",
-        page: paginationModel.page + 1,
+        page: paginationModel.page,
         size: paginationModel.pageSize,
         filter: { search },
       });
 
-      console.log(result);
-      if (result && result.data) {
-        setTableData(result.data?.items);
+      if (result) {
+        setTableData(result?.items);
         setRowCount(result.totalItems);
       }
     } catch (error: any) {
@@ -185,7 +183,7 @@ export default function ListAdminView() {
         <DataGrid
           rows={tableData}
           columns={columns}
-          getRowId={(row: any) => row.userId} 
+          getRowId={(row: any) => row.userId}
           editMode="row"
           sx={{ padding: 2 }}
           initialState={{
@@ -211,7 +209,7 @@ export default function ListAdminView() {
           "Apakah anda yakin ingin menghapus " + modalDeleteData?.userName
         }
         handleModal={() => {
-          handleDeleteAdmin(modalDeleteData?.userId + "" );
+          handleDeleteAdmin(modalDeleteData?.userId + "");
           setOpenModalDelete(!openModalDelete);
         }}
       />

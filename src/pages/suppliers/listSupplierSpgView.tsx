@@ -11,10 +11,12 @@ import { Button, Stack, TextField } from "@mui/material";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
 import { ISpgModel } from "../../models/spgModel";
+import { useParams } from "react-router-dom";
 
-export default function ListSpgView() {
+export default function ListSupplierSpgView() {
   const [tableData, setTableData] = useState<ISpgModel[]>([]);
   const { handleGetTableDataRequest } = useHttp();
+  const { userId } = useParams();
 
   const [loading, setLoading] = useState(false);
   const [rowCount, setRowCount] = useState(0);
@@ -27,10 +29,10 @@ export default function ListSpgView() {
     try {
       setLoading(true);
       const result = await handleGetTableDataRequest({
-        path: "/spg", // Path API disesuaikan untuk mengambil data SPG
+        path: "/suppliers/spg",
         page: paginationModel.page,
         size: paginationModel.pageSize,
-        filter: { search },
+        filter: { search, userId },
       });
 
       if (result) {
@@ -113,12 +115,9 @@ export default function ListSpgView() {
           columns={columns}
           getRowId={(row: any) => row.userId}
           editMode="row"
-          autoHeight
           sx={{ padding: 2 }}
+          autoHeight
           pageSizeOptions={[2, 5, 10, 25]}
-          initialState={{
-            pagination: { paginationModel: { pageSize: 10, page: 0 } },
-          }}
           paginationModel={paginationModel}
           onPaginationModelChange={setPaginationModel}
           slots={{ toolbar: CustomToolbar }}

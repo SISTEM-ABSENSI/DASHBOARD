@@ -32,7 +32,7 @@ export default function ListStoreView() {
   const [rowCount, setRowCount] = useState(0);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
-    page: 1,
+    page: 0,
   });
 
   const getTableData = async ({ search }: { search: string }) => {
@@ -41,14 +41,13 @@ export default function ListStoreView() {
       setLoading(true);
       const result = await handleGetTableDataRequest({
         path: "/stores",
-        page: paginationModel.page + 1,
+        page: paginationModel.page,
         size: paginationModel.pageSize,
         filter: { search },
       });
 
-      console.log(result);
-      if (result && result.data) {
-        setTableData(result.data?.items);
+      if (result) {
+        setTableData(result?.items);
         setRowCount(result.totalItems);
       }
     } catch (error: any) {
@@ -86,7 +85,8 @@ export default function ListStoreView() {
       flex: 1,
       renderHeader: () => <strong>{"NAMA"}</strong>,
       editable: true,
-    }, {
+    },
+    {
       field: "storeAddress",
       flex: 1,
       renderHeader: () => <strong>{"ALAMAT"}</strong>,
@@ -116,7 +116,7 @@ export default function ListStoreView() {
       flex: 1,
       cellClassName: "actions",
       getActions: ({ row }) => {
-        console.log(row)
+        console.log(row);
         return [
           <GridActionsCellItem
             icon={<EditIcon />}
@@ -196,7 +196,7 @@ export default function ListStoreView() {
         <DataGrid
           rows={tableData}
           columns={columns}
-          getRowId={(row: any) => row.storeId} 
+          getRowId={(row: any) => row.storeId}
           editMode="row"
           sx={{ padding: 2 }}
           initialState={{

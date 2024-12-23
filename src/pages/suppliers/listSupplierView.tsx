@@ -10,7 +10,7 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
 } from "@mui/x-data-grid";
-import { Add } from "@mui/icons-material";
+import { Add, MoreOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useHttp } from "../../hooks/http";
 import { Button, Stack, TextField } from "@mui/material";
@@ -31,7 +31,7 @@ export default function ListSupplierView() {
   const [rowCount, setRowCount] = useState(0);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
-    page: 1,
+    page: 0,
   });
 
   const getTableData = async ({ search }: { search: string }) => {
@@ -39,13 +39,13 @@ export default function ListSupplierView() {
       setLoading(true);
       const result = await handleGetTableDataRequest({
         path: "/suppliers",
-        page: paginationModel.page + 1,
+        page: paginationModel.page,
         size: paginationModel.pageSize,
         filter: { search },
       });
 
-      if (result && result.data) {
-        setTableData(result.data?.items);
+      if (result) {
+        setTableData(result?.items);
         setRowCount(result.totalItems);
       }
     } catch (error: any) {
@@ -100,13 +100,19 @@ export default function ListSupplierView() {
           icon={<EditIcon />}
           label="Edit"
           className="textPrimary"
-          onClick={() => navigation("/suppliers/edit/" + row.supplierId)}
+          onClick={() => navigation("/suppliers/edit/" + row.userId)}
           color="inherit"
         />,
         <GridActionsCellItem
           icon={<DeleteIcon color="error" />}
           label="Delete"
           onClick={() => handleOpenModalDelete(row)}
+          color="inherit"
+        />,
+        <GridActionsCellItem
+          icon={<MoreOutlined color="info" />}
+          label="Detail"
+          onClick={() => navigation("/suppliers/spg/" + row.userId)}
           color="inherit"
         />,
       ],
@@ -167,7 +173,7 @@ export default function ListSupplierView() {
         <DataGrid
           rows={tableData}
           columns={columns}
-          getRowId={(row: any) => row.userId} 
+          getRowId={(row: any) => row.userId}
           editMode="row"
           sx={{ padding: 2 }}
           initialState={{

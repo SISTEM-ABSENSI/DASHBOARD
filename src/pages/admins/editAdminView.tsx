@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useHttp } from "../../hooks/http";
-import {  IUserUpdateRequestModel } from "../../models/userModel";
+import { IUserUpdateRequestModel } from "../../models/userModel";
 import { IconMenus } from "../../components/icon";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 
@@ -120,6 +120,7 @@ export default function EditAdminView() {
                 id="outlined-start-adornment"
                 sx={{ m: 1 }}
                 value={userContact}
+                type="text"
                 fullWidth
                 onChange={(e) => setUserContact(e.target.value)}
               />
@@ -137,7 +138,9 @@ export default function EditAdminView() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel id="demo-multiple-name-label">Pilih Role</InputLabel>
+                <InputLabel id="demo-multiple-name-label">
+                  Pilih Role
+                </InputLabel>
                 <Select
                   labelId="demo-select-small-label"
                   id="demo-select-small"
