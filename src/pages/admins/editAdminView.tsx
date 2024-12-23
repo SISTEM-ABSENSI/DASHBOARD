@@ -54,10 +54,11 @@ export default function EditAdminView() {
       path: "/users/detail/" + adminId,
     });
 
+    console.log(result);
     if (result) {
-      setUserContact(result?.data?.userContact || "");
-      setUserName(result?.data?.userName);
-      setUserRole(result?.data?.userRole);
+      setUserContact(result?.userContact || "");
+      setUserName(result?.userName);
+      setUserRole(result?.userRole);
     }
   };
 

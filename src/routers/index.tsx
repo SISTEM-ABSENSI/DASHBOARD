@@ -24,11 +24,110 @@ import ListSupplierSpgView from "../pages/suppliers/listSupplierSpgView";
 const getProtectedRouters = (role: string) => {
   const mainRouters: { path: string; element: JSX.Element }[] = [];
 
+  const supplierRouter = [
+    ...[
+      {
+        path: "/",
+        element: <DashboardView />,
+      },
+
+      // spg router
+      {
+        path: "/spg",
+        element: <ListSpgView />,
+      },
+
+      // attendance router
+      {
+        path: "/attendances",
+        element: <ListAttendanceView />,
+      },
+
+      // attendance router
+      {
+        path: "/location",
+        element: <LocationView />,
+      },
+
+      // store router
+      {
+        path: "/stores",
+        element: <ListStoreView />,
+      },
+      {
+        path: "/stores/create",
+        element: <CreateStoreView />,
+      },
+      {
+        path: "/stores/edit/:storeId",
+        element: <EditStoreView />,
+      },
+      //my profile routers
+      {
+        path: "/my-profile",
+        element: <ProfileView />,
+      },
+      {
+        path: "/my-profile/edit/:userId",
+        element: <EditProfileView />,
+      },
+    ],
+  ];
+
   const adminRouter = [
     ...[
       {
         path: "/",
         element: <DashboardView />,
+      },
+      // supplier router
+      {
+        path: "/suppliers",
+        element: <ListSupplierView />,
+      },
+      {
+        path: "/suppliers/create",
+        element: <CreateSupplierView />,
+      },
+      {
+        path: "/suppliers/edit/:userId",
+        element: <EditSupplierView />,
+      },
+      {
+        path: "/suppliers/spg/:userId",
+        element: <ListSupplierSpgView />,
+      },
+
+      // spg router
+      {
+        path: "/spg",
+        element: <ListSpgView />,
+      },
+
+      // attendance router
+      {
+        path: "/attendances",
+        element: <ListAttendanceView />,
+      },
+
+      // attendance router
+      {
+        path: "/location",
+        element: <LocationView />,
+      },
+
+      // store router
+      {
+        path: "/stores",
+        element: <ListStoreView />,
+      },
+      {
+        path: "/stores/create",
+        element: <CreateStoreView />,
+      },
+      {
+        path: "/stores/edit/:storeId",
+        element: <EditStoreView />,
       },
       //my profile routers
       {
@@ -128,6 +227,9 @@ const getProtectedRouters = (role: string) => {
       break;
     case "SUPERADMIN":
       mainRouters.push(...superAdminRouter);
+      break;
+    case "SUPPLIER":
+      mainRouters.push(...supplierRouter);
       break;
     default:
       break;

@@ -14,9 +14,9 @@ export default function LocationView() {
       const result = await handleGetRequest({
         path: "/stores",
       });
-      console.log(result);
-      if (result && result?.data) {
-        setCoordintes(result?.data?.items);
+
+      if (result) {
+        setCoordintes(result?.items);
       }
     } catch (error) {
       console.log(error);
@@ -36,10 +36,7 @@ export default function LocationView() {
         height: "75vh",
       }}
     >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      />
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       {coordinates.map((item) => {
         return (

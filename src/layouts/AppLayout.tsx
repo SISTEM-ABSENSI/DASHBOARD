@@ -116,12 +116,46 @@ export default function AppLayout() {
 
   const menuItems = [];
 
-  const adminMenus = [
+  const supplierMenus = [
     { title: "Dashboard", link: "/", icon: <IconMenus.dashboard /> },
+    {
+      title: "Attendance",
+      link: "/attendances",
+      icon: <IconMenus.attendance />,
+    },
     {
       title: "Stores",
       link: "/stores",
       icon: <IconMenus.store />,
+    },
+    {
+      title: "Location",
+      link: "/location",
+      icon: <IconMenus.location />,
+    },
+    {
+      title: "Spg",
+      link: "/spg",
+      icon: <IconMenus.spg />,
+    },
+  ];
+
+  const adminMenus = [
+    { title: "Dashboard", link: "/", icon: <IconMenus.dashboard /> },
+    {
+      title: "Location",
+      link: "/location",
+      icon: <IconMenus.location />,
+    },
+    {
+      title: "Stores",
+      link: "/stores",
+      icon: <IconMenus.store />,
+    },
+    {
+      title: "Attendance",
+      link: "/attendances",
+      icon: <IconMenus.attendance />,
     },
     {
       title: "Suppliers",
@@ -184,6 +218,9 @@ export default function AppLayout() {
         break;
       case "SUPERADMIN":
         menuItems.push(...superAdminMenus);
+        break;
+      case "SUPPLIER":
+        menuItems.push(...supplierMenus);
         break;
       default:
         break;

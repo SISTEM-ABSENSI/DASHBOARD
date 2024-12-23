@@ -12,28 +12,30 @@ import { useNavigate } from "react-router-dom";
 import { useHttp } from "../../hooks/http";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
-import { ISupplierCreateRequestModel } from "../../models/supplierModel";
+import { IUserCreateRequestModel } from "../../models/userModel";
 
 export default function CreateSupplierView() {
   const { handlePostRequest } = useHttp();
   const navigate = useNavigate();
 
-  const [supplierName, setSupplierName] = useState("");
-  const [supplierContact, setSupplierContact] = useState("");
+  const [userContact, setUserContact] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   const handleSubmit = async () => {
     try {
-      const payload: ISupplierCreateRequestModel = {
-        supplierName,
-        supplierContact,
+      const payload: IUserCreateRequestModel = {
+        userName,
+        userContact,
+        userPassword,
+        userRole: "supplier",
       };
 
       await handlePostRequest({
-        path: "/suppliers",
+        path: "/users/register",
         body: payload,
       });
-
-      navigate("/suppliers");
+      window.history.back();
     } catch (error: unknown) {
       console.log(error);
     }
@@ -66,7 +68,7 @@ export default function CreateSupplierView() {
           color="primary"
           fontWeight={"bold"}
         >
-          Create Supplier
+          Tambah Supplier
         </Typography>
         <Box
           component="form"
@@ -79,24 +81,42 @@ export default function CreateSupplierView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nama Supplier"
-                id="outlined-supplier-name"
+                label="Nama"
+                id="outlined-start-adornment"
                 sx={{ m: 1 }}
-                value={supplierName}
+                value={userName}
                 type="text"
                 fullWidth
-                onChange={(e) => setSupplierName(e.target.value)}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Kontak Supplier"
-                id="outlined-supplier-contact"
+                label="Kontak"
+                id="outlined-start-adornment"
                 sx={{ m: 1 }}
-                value={supplierContact}
                 type="text"
+                value={userContact}
                 fullWidth
-                onChange={(e) => setSupplierContact(e.target.value)}
+                onChange={(e) => {
+                  setUserContact(e.target.value);
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Password"
+                id="outlined-start-adornment"
+                sx={{ m: 1 }}
+                value={userPassword}
+                type="password"
+                fullWidth
+                onChange={(e) => {
+                  setUserPassword(e.target.value);
+                }}
               />
             </Grid>
           </Grid>

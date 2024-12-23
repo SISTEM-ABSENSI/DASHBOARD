@@ -24,7 +24,6 @@ export default function EditStoreView() {
   const [storeLatitude, setStoreLatitude] = useState("");
   const [storeAddress, setStoreAddress] = useState("");
 
-
   const handleSubmit = async () => {
     try {
       const payload: IStoreUpdateRequestModel = {
@@ -32,7 +31,7 @@ export default function EditStoreView() {
         storeName,
         storeLongitude,
         storeLatitude,
-        storeAddress
+        storeAddress,
       };
 
       await handleUpdateRequest({
@@ -52,10 +51,10 @@ export default function EditStoreView() {
     });
 
     if (result) {
-      setStoreName(result?.data?.storeName);
-      setStoreLongitude(result?.data?.storeLongitude);
-      setStoreLatitude(result?.data?.storeLatitude);
-      setStoreAddress(result?.data?.storeAddress);
+      setStoreName(result?.storeName);
+      setStoreLongitude(result?.storeLongitude);
+      setStoreLatitude(result?.storeLatitude);
+      setStoreAddress(result?.storeAddress);
     }
   };
 

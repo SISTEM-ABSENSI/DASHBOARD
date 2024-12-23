@@ -15,9 +15,9 @@ const ProfileView = () => {
     const result = await handleGetRequest({
       path: "/my-profile",
     });
-    if (result?.data) {
-      console.log(result.data)
-      setDetailProfile(result?.data);
+
+    if (result) {
+      setDetailProfile(result);
     }
   };
 

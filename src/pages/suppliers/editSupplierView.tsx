@@ -10,27 +10,30 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useHttp } from "../../hooks/http";
-import { ISupplierUpdateRequestModel } from "../../models/supplierModel";
+import { IUserUpdateRequestModel } from "../../models/userModel";
 import { IconMenus } from "../../components/icon";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 
 export default function EditSupplierView() {
   const { handleUpdateRequest, handleGetRequest } = useHttp();
-  const { supplierId } = useParams();
+  const { userId } = useParams();
 
-  const [supplierName, setSupplierName] = useState("");
-  const [supplierContact, setSupplierContact] = useState("");
+  const [userContact, setUserContact] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   const handleSubmit = async () => {
     try {
-      const payload: ISupplierUpdateRequestModel = {
-        supplierId: supplierId ?? "",
-        supplierName,
-        supplierContact
+      const payload: IUserUpdateRequestModel = {
+        userId: userId!,
+        userName,
+        userContact,
+        userPassword,
+        userRole: "supplier",
       };
 
       await handleUpdateRequest({
-        path: "/suppliers/",
+        path: "/users",
         body: payload,
       });
 
@@ -40,19 +43,20 @@ export default function EditSupplierView() {
     }
   };
 
-  const getDetailSupplier = async () => {
+  const getDetailUser = async () => {
     const result = await handleGetRequest({
-      path: "/suppliers/detail/" + supplierId,
+      path: "/users/detail/" + userId,
     });
 
+    console.log(result);
     if (result) {
-      setSupplierName(result?.data?.supplierName || "");
-      setSupplierContact(result?.data?.supplierContact || "");
+      setUserContact(result?.userContact || "");
+      setUserName(result?.userName);
     }
   };
 
   useEffect(() => {
-    getDetailSupplier();
+    getDetailUser();
   }, []);
 
   return (
@@ -66,7 +70,7 @@ export default function EditSupplierView() {
           },
           {
             label: "Edit",
-            link: "/suppliers/edit/" + supplierId,
+            link: "/suppliers/edit/" + userId,
           },
         ]}
       />
@@ -95,28 +99,39 @@ export default function EditSupplierView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nama Supplier"
-                id="outlined-supplier-name"
+                label="Nama"
+                id="outlined-start-adornment"
                 sx={{ m: 1 }}
-                value={supplierName}
+                value={userName}
                 type="text"
                 fullWidth
-                onChange={(e) => setSupplierName(e.target.value)}
+                onChange={(e) => setUserName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Kontak Supplier"
-                id="outlined-supplier-contact"
+                label="Kontak"
+                id="outlined-start-adornment"
                 sx={{ m: 1 }}
-                value={supplierContact}
+                value={userContact}
                 type="text"
                 fullWidth
-                onChange={(e) => setSupplierContact(e.target.value)}
+                onChange={(e) => setUserContact(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Password"
+                id="outlined-start-adornment"
+                sx={{ m: 1 }}
+                value={userPassword}
+                type="password"
+                fullWidth
+                onChange={(e) => setUserPassword(e.target.value)}
               />
             </Grid>
           </Grid>
-          <Stack direction={"row"} justifyContent="flex-end">
+          <Stack direction="row" justifyContent="flex-end">
             <Button
               sx={{
                 m: 1,
@@ -125,7 +140,7 @@ export default function EditSupplierView() {
                 color: "#FFF",
                 fontWeight: "bold",
               }}
-              variant={"contained"}
+              variant="contained"
               onClick={handleSubmit}
             >
               Submit

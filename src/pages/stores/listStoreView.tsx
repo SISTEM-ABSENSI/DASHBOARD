@@ -46,6 +46,8 @@ export default function ListStoreView() {
         filter: { search },
       });
 
+      console.log("______________result store_____________");
+      console.log(result);
       if (result) {
         setTableData(result?.items);
         setRowCount(result.totalItems);
@@ -200,7 +202,7 @@ export default function ListStoreView() {
           editMode="row"
           sx={{ padding: 2 }}
           initialState={{
-            pagination: { paginationModel: { pageSize: 10, page: 1 } },
+            pagination: { paginationModel: { pageSize: 10, page: 0 } },
           }}
           autoHeight
           pageSizeOptions={[2, 5, 10, 25]}

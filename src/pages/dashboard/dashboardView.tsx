@@ -12,6 +12,7 @@ import { IStoreModel } from "../../models/storeModel";
 const DashboardView = () => {
   const { handleGetRequest } = useHttp();
   const navigation = useNavigate();
+  const [isLoading, setIsloading] = useState(true);
 
   // State untuk Statistik
   const [statistic, setStatistic] = useState({
@@ -30,8 +31,10 @@ const DashboardView = () => {
       const result = await handleGetRequest({
         path: "/statistic",
       });
-      if (result?.data) {
-        setStatistic(result.data);
+
+      console.log(result);
+      if (result) {
+        setStatistic(result);
       }
     } catch (error) {
       console.log(error);
@@ -44,18 +47,26 @@ const DashboardView = () => {
       const result = await handleGetRequest({
         path: "/stores",
       });
-      if (result?.data) {
-        setCoordinates(result?.data?.items);
+
+      if (result?.items) {
+        setCoordinates(result?.items);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  const getData = async () => {
+    await handleGetStatistic();
+    await handleGetStores();
+    setIsloading(false);
+  };
+
   useEffect(() => {
-    handleGetStatistic();
-    handleGetStores();
+    getData();
   }, []);
+
+  if (isLoading) return "laoding...";
 
   return (
     <Box>
@@ -154,10 +165,7 @@ const DashboardView = () => {
                 height: "75vh",
               }}
             >
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              />
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
               {coordinates.map((item) => (
                 <Marker
@@ -166,7 +174,8 @@ const DashboardView = () => {
                 >
                   <Popup>
                     <h1>{item.storeName}</h1>
-                    <small>Latitude: {item.storeLatitude}</small><br />
+                    <small>Latitude: {item.storeLatitude}</small>
+                    <br />
                     <small>Longitude: {item.storeLongitude}</small>
                   </Popup>
                 </Marker>
