@@ -35,7 +35,7 @@ export default function ListSupplierSpgView() {
         filter: { search, userId },
       });
 
-      if (result) {
+      if (result && result?.items) {
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }

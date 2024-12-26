@@ -19,6 +19,7 @@ import { IconMenus } from "../../components/icon";
 import { useNavigate } from "react-router-dom";
 import ModalStyle from "../../components/modal";
 import { IUserModel } from "../../models/userModel";
+import { convertTime } from "../../utilities/convertTime";
 
 export default function ListAdminView() {
   const [tableData, setTableData] = useState<GridRowsProp[]>([]);
@@ -45,7 +46,7 @@ export default function ListAdminView() {
         filter: { search },
       });
 
-      if (result) {
+      if (result && result?.items) {
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }
@@ -96,6 +97,7 @@ export default function ListAdminView() {
       field: "createdAt",
       renderHeader: () => <strong>{"DIBUAT PADA"}</strong>,
       editable: true,
+      valueFormatter: (item) => convertTime(item.value),
     },
     {
       field: "actions",

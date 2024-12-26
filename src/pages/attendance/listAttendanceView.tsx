@@ -7,10 +7,11 @@ import {
 } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useHttp } from "../../hooks/http";
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, Chip, Stack, TextField } from "@mui/material";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
 import { ISpgModel } from "../../models/spgModel";
+import { convertTime } from "../../utilities/convertTime";
 
 export default function ListAttendanceView() {
   const [tableData, setTableData] = useState<ISpgModel[]>([]);
@@ -33,7 +34,7 @@ export default function ListAttendanceView() {
         filter: { search },
       });
 
-      if (result) {
+      if (result && result?.items) {
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }
@@ -75,18 +76,52 @@ export default function ListAttendanceView() {
       renderHeader: () => <strong>{"STATUS"}</strong>,
       flex: 1,
       editable: true,
+      renderCell: (params) => {
+        const status = params.value;
+        let color: "default" | "primary" | "success" | "warning" | "error" =
+          "default";
+
+        // Tentukan warna berdasarkan status
+        switch (status) {
+          case "checkin":
+            color = "warning";
+            break;
+          case "checkout":
+            color = "primary";
+            break;
+          case "done":
+            color = "success";
+            break;
+          case "cancel":
+            color = "error";
+            break;
+          default:
+            color = "default";
+            break;
+        }
+
+        return (
+          <Chip
+            label={status.charAt(0).toUpperCase() + status.slice(1)}
+            color={color}
+            variant="outlined"
+          />
+        );
+      },
     },
     {
       field: "scheduleStartDate",
       renderHeader: () => <strong>{"START"}</strong>,
       flex: 1,
       editable: true,
+      valueFormatter: (item) => convertTime(item.value),
     },
     {
       field: "scheduleEndDate",
       renderHeader: () => <strong>{"END"}</strong>,
       flex: 1,
       editable: true,
+      valueFormatter: (item) => convertTime(item.value),
     },
   ];
 
@@ -130,6 +165,7 @@ export default function ListAttendanceView() {
           getRowId={(row: any) => row.scheduleId}
           editMode="row"
           autoHeight
+          sx={{ padding: 2 }}
           pageSizeOptions={[2, 5, 10, 25]}
           paginationModel={paginationModel}
           onPaginationModelChange={setPaginationModel}

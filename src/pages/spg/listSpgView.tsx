@@ -11,6 +11,7 @@ import { Button, Stack, TextField } from "@mui/material";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
 import { ISpgModel } from "../../models/spgModel";
+import { convertTime } from "../../utilities/convertTime";
 
 export default function ListSpgView() {
   const [tableData, setTableData] = useState<ISpgModel[]>([]);
@@ -33,7 +34,7 @@ export default function ListSpgView() {
         filter: { search },
       });
 
-      if (result) {
+      if (result && result?.items) {
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }
@@ -71,6 +72,8 @@ export default function ListSpgView() {
       field: "createdAt",
       renderHeader: () => <strong>{"CREATED AT"}</strong>,
       editable: true,
+      flex: 1,
+      valueFormatter: (item) => convertTime(item.value),
     },
   ];
 

@@ -1,8 +1,21 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 import { useEffect, useState } from "react";
 import { IStoreModel } from "../../models/storeModel";
 import { useHttp } from "../../hooks/http";
+
+// Fix the Leaflet marker icon paths
+const defaultIcon = L.icon({
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+L.Marker.prototype.options.icon = defaultIcon;
 
 export default function LocationView() {
   const { handleGetRequest } = useHttp();
@@ -15,7 +28,7 @@ export default function LocationView() {
         path: "/stores",
       });
 
-      if (result) {
+      if (result && result?.items) {
         setCoordintes(result?.items);
       }
     } catch (error) {
@@ -29,7 +42,7 @@ export default function LocationView() {
 
   return (
     <MapContainer
-      center={[-6.1754, 106.8272]}
+      center={[-6.1754, 106.8272] as [number, number]}
       zoom={5}
       maxZoom={20}
       style={{
@@ -47,6 +60,7 @@ export default function LocationView() {
             <Popup>
               <h1>{item?.storeName}</h1>
               <small>Latitude: {item.storeLatitude}</small>
+              <br />
               <small>Longitude: {item.storeLongitude}</small>
             </Popup>
           </Marker>

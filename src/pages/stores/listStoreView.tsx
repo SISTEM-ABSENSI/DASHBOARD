@@ -19,6 +19,7 @@ import { IconMenus } from "../../components/icon";
 import { useNavigate } from "react-router-dom";
 import ModalStyle from "../../components/modal";
 import { IStoreModel } from "../../models/storeModel";
+import { convertTime } from "../../utilities/convertTime";
 
 export default function ListStoreView() {
   const [tableData, setTableData] = useState<GridRowsProp[]>([]);
@@ -36,7 +37,6 @@ export default function ListStoreView() {
   });
 
   const getTableData = async ({ search }: { search: string }) => {
-    console.log(paginationModel);
     try {
       setLoading(true);
       const result = await handleGetTableDataRequest({
@@ -46,9 +46,7 @@ export default function ListStoreView() {
         filter: { search },
       });
 
-      console.log("______________result store_____________");
-      console.log(result);
-      if (result) {
+      if (result && result?.items) {
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }
@@ -110,6 +108,7 @@ export default function ListStoreView() {
       field: "createdAt",
       renderHeader: () => <strong>{"CREATED AT"}</strong>,
       editable: true,
+      valueFormatter: (item) => convertTime(item.value),
     },
     {
       field: "actions",

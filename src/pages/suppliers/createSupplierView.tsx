@@ -8,7 +8,7 @@ import {
   Stack,
   Grid,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+
 import { useHttp } from "../../hooks/http";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
@@ -16,7 +16,6 @@ import { IUserCreateRequestModel } from "../../models/userModel";
 
 export default function CreateSupplierView() {
   const { handlePostRequest } = useHttp();
-  const navigate = useNavigate();
 
   const [userContact, setUserContact] = useState("");
   const [userName, setUserName] = useState("");

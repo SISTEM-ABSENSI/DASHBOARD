@@ -14,6 +14,21 @@ import { IStoreUpdateRequestModel } from "../../models/storeModel";
 import { IconMenus } from "../../components/icon";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+const defaultIcon = L.icon({
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+L.Marker.prototype.options.icon = defaultIcon;
+
 export default function EditStoreView() {
   const { handleUpdateRequest, handleGetRequest } = useHttp();
   const { storeId } = useParams();
@@ -124,7 +139,19 @@ export default function EditStoreView() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                label="Latitude"
+                id="outlined-start-adornment"
+                value={storeLatitude}
+                fullWidth
+                onChange={(e) => {
+                  setStoreLatitude(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
                 label="Longitude"
+                id="outlined-start-adornment"
                 value={storeLongitude}
                 type="text"
                 fullWidth
@@ -133,18 +160,34 @@ export default function EditStoreView() {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Latitude"
-                value={storeLatitude}
-                type="text"
-                fullWidth
-                onChange={(e) => {
-                  setStoreLatitude(e.target.value);
-                }}
-              />
-            </Grid>
           </Grid>
+
+          <MapContainer
+            center={[-6.1754, 106.8272] as [number, number]}
+            zoom={5}
+            maxZoom={20}
+            style={{
+              height: "75vh",
+              marginTop: "20px",
+              marginBottom: "20px",
+            }}
+          >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+            {storeLatitude && storeLongitude && (
+              <Marker
+                position={[Number(storeLatitude), Number(storeLongitude)]}
+              >
+                <Popup>
+                  <h1>{storeName}</h1>
+                  position={[Number(storeLatitude), Number(storeLongitude)]}
+                  <small>Latitude: {storeLatitude}</small>
+                  <br />
+                  <small>Longitude: {storeLongitude}</small>
+                </Popup>
+              </Marker>
+            )}
+          </MapContainer>
           <Stack direction={"row"} justifyContent="flex-end">
             <Button
               sx={{

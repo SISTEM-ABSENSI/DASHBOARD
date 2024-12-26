@@ -6,7 +6,20 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css"; // Leaflet CSS untuk map
+import L from "leaflet";
 import { IStoreModel } from "../../models/storeModel";
+
+// Fix the Leaflet marker icon paths
+const defaultIcon = L.icon({
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+L.Marker.prototype.options.icon = defaultIcon;
 
 // DashboardView dengan Statistik dan Peta Toko
 const DashboardView = () => {

@@ -6,13 +6,28 @@ import {
   Box,
   TextField,
   Stack,
-  Grid
+  Grid,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useHttp } from "../../hooks/http";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
 import { IStoreCreateRequestModel } from "../../models/storeModel";
+
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+const defaultIcon = L.icon({
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+L.Marker.prototype.options.icon = defaultIcon;
 
 export default function CreateStoreView() {
   const { handlePostRequest } = useHttp();
@@ -23,14 +38,13 @@ export default function CreateStoreView() {
   const [storeLatitude, setStoreLatitude] = useState("");
   const [storeAddress, setStoreAddress] = useState("");
 
-
   const handleSubmit = async () => {
     try {
       const payload: IStoreCreateRequestModel = {
         storeName,
         storeLongitude,
         storeLatitude,
-        storeAddress
+        storeAddress,
       };
 
       await handlePostRequest({
@@ -86,7 +100,6 @@ export default function CreateStoreView() {
               <TextField
                 label="Name"
                 id="outlined-start-adornment"
-                sx={{ m: 1 }}
                 value={storeName}
                 fullWidth
                 onChange={(e) => {
@@ -98,7 +111,6 @@ export default function CreateStoreView() {
               <TextField
                 label="Alamat"
                 id="outlined-start-adornment"
-                sx={{ m: 1 }}
                 value={storeAddress}
                 fullWidth
                 minRows={4}
@@ -109,9 +121,19 @@ export default function CreateStoreView() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                label="Latitude"
+                id="outlined-start-adornment"
+                value={storeLatitude}
+                fullWidth
+                onChange={(e) => {
+                  setStoreLatitude(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
                 label="Longitude"
                 id="outlined-start-adornment"
-                sx={{ m: 1 }}
                 value={storeLongitude}
                 type="text"
                 fullWidth
@@ -120,20 +142,34 @@ export default function CreateStoreView() {
                 }}
               />
             </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Latitude"
-                id="outlined-start-adornment"
-                sx={{ m: 1 }}
-                value={storeLatitude}
-                fullWidth
-                onChange={(e) => {
-                  setStoreLatitude(e.target.value);
-                }}
-              />
-            </Grid>
           </Grid>
+
+          <MapContainer
+            center={[-6.1754, 106.8272] as [number, number]}
+            zoom={5}
+            maxZoom={20}
+            style={{
+              height: "75vh",
+              marginTop: "20px",
+              marginBottom: "20px",
+            }}
+          >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+            {storeLatitude && storeLongitude && (
+              <Marker
+                position={[Number(storeLatitude), Number(storeLongitude)]}
+              >
+                <Popup>
+                  <h1>{storeName}</h1>
+                  position={[Number(storeLatitude), Number(storeLongitude)]}
+                  <small>Latitude: {storeLatitude}</small>
+                  <br />
+                  <small>Longitude: {storeLongitude}</small>
+                </Popup>
+              </Marker>
+            )}
+          </MapContainer>
           <Stack direction={"row"} justifyContent="flex-end">
             <Button variant={"contained"} onClick={handleSubmit}>
               Submit

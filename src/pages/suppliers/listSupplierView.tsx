@@ -44,7 +44,7 @@ export default function ListSupplierView() {
         filter: { search },
       });
 
-      if (result) {
+      if (result && result?.items) {
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }

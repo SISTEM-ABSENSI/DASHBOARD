@@ -35,7 +35,6 @@ import {
 import { useAppContext } from "../context/app.context";
 import { IconMenus } from "../components/icon";
 import { useToken } from "../hooks/token";
-import logo from "../assets/logo.png";
 
 const drawerWidth = 240;
 
@@ -307,7 +306,7 @@ export default function AppLayout() {
                 textDecoration: "none",
               }}
             >
-              DASHBOARD
+              DINASTI
             </Typography>
 
             <Typography
@@ -326,7 +325,7 @@ export default function AppLayout() {
                 textDecoration: "none",
               }}
             >
-              DASHBOARD{" "}
+              DINASTI{" "}
             </Typography>
             <Box
               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}

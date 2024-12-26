@@ -113,6 +113,7 @@ export class ServiceHttp {
         }
       );
 
+      console.log(result);
       return {
         ...result.data.data,
         page: page,
