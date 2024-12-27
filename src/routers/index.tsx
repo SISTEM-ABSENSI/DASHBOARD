@@ -20,6 +20,7 @@ import EditSupplierView from "../pages/suppliers/editSupplierView";
 import ListAttendanceView from "../pages/attendance/listAttendanceView";
 import LocationView from "../pages/location/locationView";
 import ListSupplierSpgView from "../pages/suppliers/listSupplierSpgView";
+import ListAttendanceHistoryView from "../pages/attendance/listAttendanceHistoryView";
 
 const getProtectedRouters = (role: string) => {
   const mainRouters: { path: string; element: JSX.Element }[] = [];
@@ -184,6 +185,11 @@ const getProtectedRouters = (role: string) => {
     {
       path: "/attendances",
       element: <ListAttendanceView />,
+    },
+
+    {
+      path: "/attendances/histories/:attendanceHistoryUserId",
+      element: <ListAttendanceHistoryView />,
     },
 
     // attendance router

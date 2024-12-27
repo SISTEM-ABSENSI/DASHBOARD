@@ -17,6 +17,7 @@ import { IStoreCreateRequestModel } from "../../models/storeModel";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useAppContext } from "../../context/app.context";
 
 const defaultIcon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -32,11 +33,43 @@ L.Marker.prototype.options.icon = defaultIcon;
 export default function CreateStoreView() {
   const { handlePostRequest } = useHttp();
   const navigate = useNavigate();
+  const { setAppAlert } = useAppContext();
 
   const [storeName, setStoreName] = useState("");
   const [storeLongitude, setStoreLongitude] = useState("");
   const [storeLatitude, setStoreLatitude] = useState("");
   const [storeAddress, setStoreAddress] = useState("");
+  const [showCoordinate, setShowCoordinate] = useState(false);
+
+  const isValidCoordinate = (latitude: string, longitude: string): boolean => {
+    const coordinateRegex = /^-?\d+(\.\d+)?$/;
+
+    if (
+      !coordinateRegex.test(latitude.trim()) ||
+      !coordinateRegex.test(longitude.trim())
+    ) {
+      return false;
+    }
+
+    const lat = parseFloat(latitude);
+    const lng = parseFloat(longitude);
+
+    return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+  };
+
+  const handleViewMap = () => {
+    if (isValidCoordinate(storeLatitude, storeLongitude)) {
+      setShowCoordinate(true);
+    } else {
+      setAppAlert({
+        isDisplayAlert: true,
+        message:
+          "Invalid coordinates! Latitude must be between -90 and 90, and Longitude must be between -180 and 180.",
+        alertType: "error",
+      });
+      setShowCoordinate(false);
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -127,6 +160,7 @@ export default function CreateStoreView() {
                 fullWidth
                 onChange={(e) => {
                   setStoreLatitude(e.target.value);
+                  setShowCoordinate(false);
                 }}
               />
             </Grid>
@@ -139,8 +173,18 @@ export default function CreateStoreView() {
                 fullWidth
                 onChange={(e) => {
                   setStoreLongitude(e.target.value);
+                  setShowCoordinate(false);
                 }}
               />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Button
+                onClick={handleViewMap}
+                variant="contained"
+                disabled={!storeLongitude || !storeLatitude}
+              >
+                Lihat Peta
+              </Button>
             </Grid>
           </Grid>
 
@@ -156,9 +200,12 @@ export default function CreateStoreView() {
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-            {storeLatitude && storeLongitude && (
+            {showCoordinate && (
               <Marker
-                position={[Number(storeLatitude), Number(storeLongitude)]}
+                position={[
+                  Number(storeLatitude.trim()),
+                  Number(storeLongitude.trim()),
+                ]}
               >
                 <Popup>
                   <h1>{storeName}</h1>

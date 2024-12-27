@@ -12,10 +12,12 @@ import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
 import { ISpgModel } from "../../models/spgModel";
 import { convertTime } from "../../utilities/convertTime";
+import { useNavigate } from "react-router-dom";
 
 export default function ListAttendanceView() {
   const [tableData, setTableData] = useState<ISpgModel[]>([]);
   const { handleGetTableDataRequest } = useHttp();
+  const navigation = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [rowCount, setRowCount] = useState(0);
@@ -53,7 +55,7 @@ export default function ListAttendanceView() {
     {
       field: "userName",
       flex: 1,
-      renderHeader: () => <strong>{"NAMA"}</strong>,
+      renderHeader: () => <strong>{"User"}</strong>,
       valueGetter: (params) => params.row.user?.userName || "", // Access nested user.name
       editable: true,
     },
@@ -104,7 +106,7 @@ export default function ListAttendanceView() {
           <Chip
             label={status.charAt(0).toUpperCase() + status.slice(1)}
             color={color}
-            variant="outlined"
+            // variant="outlined"
           />
         );
       },
@@ -122,6 +124,25 @@ export default function ListAttendanceView() {
       flex: 1,
       editable: true,
       valueFormatter: (item) => convertTime(item.value),
+    },
+    {
+      field: "actions",
+      type: "actions",
+      renderHeader: () => <strong>{"History"}</strong>,
+      flex: 1,
+      cellClassName: "actions",
+      getActions: ({ row }) => {
+        return [
+          <Chip
+            label={"History"}
+            color={"success"}
+            variant="outlined"
+            onClick={() =>
+              navigation("/attendances/histories/" + row.scheduleUserId)
+            }
+          />,
+        ];
+      },
     },
   ];
 
