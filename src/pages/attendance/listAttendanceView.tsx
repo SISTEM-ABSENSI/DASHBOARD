@@ -56,22 +56,21 @@ export default function ListAttendanceView() {
       field: "userName",
       flex: 1,
       renderHeader: () => <strong>{"User"}</strong>,
-      valueGetter: (params) => params.row.user?.userName || "", // Access nested user.name
+      valueGetter: (params) => params.row.user?.userName || "",
       editable: true,
     },
     {
       field: "storeName",
       flex: 1,
       renderHeader: () => <strong>{"Store"}</strong>,
-      valueGetter: (params) => params.row.store?.storeName || "", // Access nested user.name
+      valueGetter: (params) => params.row.store?.storeName || "",
       editable: true,
     },
     {
       field: "storeAddress",
       flex: 1,
       renderHeader: () => <strong>{"Address"}</strong>,
-      valueGetter: (params) => params.row.store?.storeAddress || "", // Access nested user.name
-      editable: true,
+      valueGetter: (params) => params.row.store?.storeAddress || "",
     },
     {
       field: "scheduleStatus",
@@ -82,8 +81,6 @@ export default function ListAttendanceView() {
         const status = params.value;
         let color: "default" | "primary" | "success" | "warning" | "error" =
           "default";
-
-        // Tentukan warna berdasarkan status
         switch (status) {
           case "checkin":
             color = "warning";
@@ -106,7 +103,6 @@ export default function ListAttendanceView() {
           <Chip
             label={status.charAt(0).toUpperCase() + status.slice(1)}
             color={color}
-            // variant="outlined"
           />
         );
       },
