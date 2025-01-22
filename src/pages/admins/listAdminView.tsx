@@ -40,7 +40,7 @@ export default function ListAdminView() {
     try {
       setLoading(true);
       const result = await handleGetTableDataRequest({
-        path: "/users",
+        path: "/admins",
         page: paginationModel.page,
         size: paginationModel.pageSize,
         filter: { search },
@@ -59,7 +59,7 @@ export default function ListAdminView() {
 
   const handleDeleteAdmin = async (userId: string) => {
     await handleRemoveRequest({
-      path: `/users/${userId}`,
+      path: `/admins/${userId}`,
     });
     window.location.reload();
   };

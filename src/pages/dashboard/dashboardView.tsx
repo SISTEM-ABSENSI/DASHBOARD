@@ -1,4 +1,5 @@
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+import { Box, Card, Grid, Stack, Typography, alpha } from "@mui/material";
+import { blue, green, orange, purple } from "@mui/material/colors";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
 import { useHttp } from "../../hooks/http";
@@ -8,6 +9,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css"; // Leaflet CSS untuk map
 import L from "leaflet";
 import { IStoreModel } from "../../models/storeModel";
+import { IStatisticModel } from "../../models/statisticModel";
+import { LocationOn as LocationIcon } from "@mui/icons-material";
 
 // Fix the Leaflet marker icon paths
 const defaultIcon = L.icon({
@@ -21,6 +24,57 @@ const defaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = defaultIcon;
 
+const DashboardCard = ({
+  icon: Icon,
+  title,
+  value,
+  color,
+  onClick,
+}: {
+  icon: any;
+  title: string;
+  value: number;
+  color: string;
+  onClick: () => void;
+}) => (
+  <Card
+    sx={{
+      p: 3,
+      minWidth: 200,
+      cursor: "pointer",
+      transition: "transform 0.2s, box-shadow 0.2s",
+      "&:hover": {
+        transform: "translateY(-4px)",
+        boxShadow: (theme) => theme.shadows[8],
+        bgcolor: alpha(color, 0.04),
+      },
+    }}
+    onClick={onClick}
+  >
+    <Stack spacing={3}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Box
+          sx={{
+            p: 1.5,
+            borderRadius: 2,
+            bgcolor: alpha(color, 0.12),
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Icon sx={{ fontSize: 28, color: color }} />
+        </Box>
+        <Typography variant="h4" fontWeight="bold" color={color}>
+          {value}
+        </Typography>
+      </Stack>
+      <Typography variant="subtitle1" color="text.secondary">
+        {title}
+      </Typography>
+    </Stack>
+  </Card>
+);
+
 // DashboardView dengan Statistik dan Peta Toko
 const DashboardView = () => {
   const { handleGetRequest } = useHttp();
@@ -28,11 +82,11 @@ const DashboardView = () => {
   const [isLoading, setIsloading] = useState(true);
 
   // State untuk Statistik
-  const [statistic, setStatistic] = useState({
+  const [statistic, setStatistic] = useState<IStatisticModel>({
     totalUsers: 0,
-    totalSpg: 0,
+    totalAdmins: 0,
+    totalSuperAdmins: 0,
     totalStores: 0,
-    totalSuppliers: 0,
   });
 
   // State untuk Koordinat Peta
@@ -93,110 +147,146 @@ const DashboardView = () => {
         ]}
       />
 
-      <Grid container spacing={2} mb={2}>
-        {/* Card Statistik */}
-        <Grid item md={3} sm={4} xs={12}>
-          <Card
-            sx={{ p: 3, minWidth: 200, cursor: "pointer" }}
-            onClick={() => navigation("/spg")}
-          >
-            <Stack direction="row" spacing={2}>
-              <IconMenus.spg fontSize="large" color={"inherit"} />
-              <Stack justifyContent="center">
-                <Typography>SPG</Typography>
-                <Typography fontSize="large" fontWeight="bold">
-                  {statistic.totalSpg}
-                </Typography>
-              </Stack>
-            </Stack>
-          </Card>
+      <Box sx={{ p: 3 }}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          fontWeight="medium"
+          color="text.primary"
+        >
+          Dashboard Overview
+        </Typography>
+
+        <Grid container spacing={3} mt={1}>
+          <Grid item md={3} sm={6} xs={12}>
+            <DashboardCard
+              icon={IconMenus.user}
+              title="Total Users"
+              value={statistic.totalUsers}
+              color={blue[500]}
+              onClick={() => navigation("/users")}
+            />
+          </Grid>
+
+          <Grid item md={3} sm={6} xs={12}>
+            <DashboardCard
+              icon={IconMenus.admin}
+              title="Total Admins"
+              value={statistic.totalAdmins}
+              color={green[500]}
+              onClick={() => navigation("/admins")}
+            />
+          </Grid>
+
+          <Grid item md={3} sm={6} xs={12}>
+            <DashboardCard
+              icon={IconMenus.admin}
+              title="Super Admins"
+              value={statistic.totalSuperAdmins}
+              color={purple[500]}
+              onClick={() => navigation("/admins")}
+            />
+          </Grid>
+
+          <Grid item md={3} sm={6} xs={12}>
+            <DashboardCard
+              icon={IconMenus.store}
+              title="Total Stores"
+              value={statistic.totalStores}
+              color={orange[500]}
+              onClick={() => navigation("/stores")}
+            />
+          </Grid>
         </Grid>
 
-        {/* Card Statistik Lainnya */}
-        <Grid item md={3} sm={4} xs={12}>
+        <Grid item xs={12} mt={3}>
           <Card
-            sx={{ p: 3, minWidth: 200, cursor: "pointer" }}
-            onClick={() => navigation("/admins")}
+            elevation={0}
+            sx={{
+              p: 3,
+              minWidth: 200,
+              borderRadius: 2,
+              bgcolor: "background.paper",
+              border: (theme) =>
+                `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+            }}
           >
-            <Stack direction="row" spacing={2}>
-              <IconMenus.admin fontSize="large" color={"inherit"} />
-              <Stack justifyContent="center">
-                <Typography>User</Typography>
-                <Typography fontSize="large" fontWeight="bold">
-                  {statistic.totalUsers}
+            <Stack spacing={3}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <LocationIcon
+                    sx={{
+                      color: (theme) => theme.palette.primary.main,
+                      fontSize: 24,
+                    }}
+                  />
+                  <Typography variant="h6" fontWeight="600">
+                    Store Locations
+                  </Typography>
+                </Stack>
+
+                <Typography variant="body2" color="text.secondary">
+                  {coordinates.length} stores
                 </Typography>
               </Stack>
-            </Stack>
-          </Card>
-        </Grid>
 
-        <Grid item md={3} sm={4} xs={12}>
-          <Card
-            sx={{ p: 3, minWidth: 200, cursor: "pointer" }}
-            onClick={() => navigation("/stores")}
-          >
-            <Stack direction="row" spacing={2}>
-              <IconMenus.store fontSize="large" color={"inherit"} />
-              <Stack justifyContent="center">
-                <Typography>Stores</Typography>
-                <Typography fontSize="large" fontWeight="bold">
-                  {statistic.totalStores}
-                </Typography>
-              </Stack>
-            </Stack>
-          </Card>
-        </Grid>
-
-        <Grid item md={3} sm={4} xs={12}>
-          <Card
-            sx={{ p: 3, minWidth: 200, cursor: "pointer" }}
-            onClick={() => navigation("/suppliers")}
-          >
-            <Stack direction="row" spacing={2}>
-              <IconMenus.admin fontSize="large" color={"inherit"} />
-              <Stack justifyContent="center">
-                <Typography>Supplier</Typography>
-                <Typography fontSize="large" fontWeight="bold">
-                  {statistic.totalSuppliers}
-                </Typography>
-              </Stack>
-            </Stack>
-          </Card>
-        </Grid>
-
-        {/* Seksi Peta */}
-        <Grid item xs={12}>
-          <Card sx={{ p: 3, minWidth: 200 }}>
-            <Typography variant="h6" mb={2}>
-              Store Locations
-            </Typography>
-            <MapContainer
-              center={[-6.1754, 106.8272]} // Center di sekitar Jakarta
-              zoom={5}
-              maxZoom={20}
-              style={{
-                height: "75vh",
-              }}
-            >
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-
-              {coordinates.map((item) => (
-                <Marker
-                  key={item.storeId}
-                  position={[+item.storeLatitude, +item.storeLongitude]}
+              <Box
+                sx={{
+                  height: "75vh",
+                  borderRadius: 1,
+                  overflow: "hidden",
+                  border: (theme) =>
+                    `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                }}
+              >
+                <MapContainer
+                  center={[-6.1754, 106.8272]}
+                  zoom={5}
+                  maxZoom={20}
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                  }}
                 >
-                  <Popup>
-                    <h1>{item.storeName}</h1>
-                    <small>Latitude: {item.storeLatitude}</small>
-                    <br />
-                    <small>Longitude: {item.storeLongitude}</small>
-                  </Popup>
-                </Marker>
-              ))}
-            </MapContainer>
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+                  {coordinates.map((item) => (
+                    <Marker
+                      key={item.storeId}
+                      position={[+item.storeLatitude, +item.storeLongitude]}
+                    >
+                      <Popup>
+                        <Box sx={{ p: 1 }}>
+                          <Typography
+                            variant="subtitle1"
+                            fontWeight="600"
+                            gutterBottom
+                          >
+                            {item.storeName}
+                          </Typography>
+
+                          <Stack spacing={0.5}>
+                            <Typography variant="body2" color="text.secondary">
+                              Latitude: {item.storeLatitude}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              Longitude: {item.storeLongitude}
+                            </Typography>
+                          </Stack>
+                        </Box>
+                      </Popup>
+                    </Marker>
+                  ))}
+                </MapContainer>
+              </Box>
+            </Stack>
           </Card>
         </Grid>
-      </Grid>
+      </Box>
     </Box>
   );
 };

@@ -13,7 +13,7 @@ import { IconMenus } from "../../components/icon";
 import { ISpgModel } from "../../models/spgModel";
 import { convertTime } from "../../utilities/convertTime";
 
-export default function ListSpgView() {
+export default function ListUserView() {
   const [tableData, setTableData] = useState<ISpgModel[]>([]);
   const { handleGetTableDataRequest } = useHttp();
 
@@ -28,7 +28,7 @@ export default function ListSpgView() {
     try {
       setLoading(true);
       const result = await handleGetTableDataRequest({
-        path: "/spg", // Path API disesuaikan untuk mengambil data SPG
+        path: "/users",
         page: paginationModel.page,
         size: paginationModel.pageSize,
         filter: { search },

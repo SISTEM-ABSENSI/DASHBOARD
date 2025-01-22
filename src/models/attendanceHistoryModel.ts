@@ -5,4 +5,5 @@ export interface IAttendanceHistoryModel extends IRootModel {
   attendanceHistoryUserId: number;
   attendanceHistoryTime: string;
   attendanceHistoryCategory: "checkin" | "checkout" | "outside";
+  attendanceHistoryPhoto: string;
 }

@@ -39,7 +39,7 @@ export default function EditAdminView() {
       };
 
       await handleUpdateRequest({
-        path: "/users",
+        path: "/admins",
         body: payload,
       });
 
@@ -51,7 +51,7 @@ export default function EditAdminView() {
 
   const getDetailUser = async () => {
     const result = await handleGetRequest({
-      path: "/users/detail/" + adminId,
+      path: "/admins/detail/" + adminId,
     });
 
     console.log(result);

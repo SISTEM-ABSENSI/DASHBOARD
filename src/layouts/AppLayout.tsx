@@ -133,9 +133,9 @@ export default function AppLayout() {
       icon: <IconMenus.location />,
     },
     {
-      title: "Spg",
-      link: "/spg",
-      icon: <IconMenus.spg />,
+      title: "Users",
+      link: "/users",
+      icon: <IconMenus.user />,
     },
   ];
 
@@ -157,14 +157,9 @@ export default function AppLayout() {
       icon: <IconMenus.attendance />,
     },
     {
-      title: "Suppliers",
-      link: "/suppliers",
-      icon: <IconMenus.supplier />,
-    },
-    {
-      title: "Spg",
-      link: "/spg",
-      icon: <IconMenus.spg />,
+      title: "Users",
+      link: "/users",
+      icon: <IconMenus.user />,
     },
     {
       title: "Admins",
@@ -191,15 +186,11 @@ export default function AppLayout() {
       icon: <IconMenus.store />,
     },
     {
-      title: "Spg",
-      link: "/spg",
-      icon: <IconMenus.spg />,
+      title: "Users",
+      link: "/users",
+      icon: <IconMenus.user />,
     },
-    {
-      title: "Suppliers",
-      link: "/suppliers",
-      icon: <IconMenus.supplier />,
-    },
+
     {
       title: "Admins",
       link: "/admins",
@@ -217,9 +208,6 @@ export default function AppLayout() {
         break;
       case "SUPERADMIN":
         menuItems.push(...superAdminMenus);
-        break;
-      case "SUPPLIER":
-        menuItems.push(...supplierMenus);
         break;
       default:
         break;
@@ -306,7 +294,7 @@ export default function AppLayout() {
                 textDecoration: "none",
               }}
             >
-              DINASTI
+              DASHBOARD
             </Typography>
 
             <Typography
@@ -325,7 +313,7 @@ export default function AppLayout() {
                 textDecoration: "none",
               }}
             >
-              DINASTI{" "}
+              DASHBOARD
             </Typography>
             <Box
               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}

@@ -1,6 +1,6 @@
 export interface IStatisticModel {
   totalUsers: number;
-  totalSpg: number;
+  totalAdmins: number;
+  totalSuperAdmins: number;
   totalStores: number;
-  totalSuppliers: number;
 }

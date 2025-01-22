@@ -25,9 +25,9 @@ export default function CreateAdminView() {
   const [userContact, setUserContact] = useState("");
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userRole, setUserRole] = useState<
-    "admin" | "superAdmin" | "supplier" | string
-  >("admin");
+  const [userRole, setUserRole] = useState<"admin" | "superAdmin" | string>(
+    "admin"
+  );
 
   const handleSubmit = async () => {
     try {
@@ -39,7 +39,7 @@ export default function CreateAdminView() {
       };
 
       await handlePostRequest({
-        path: "/users/register",
+        path: "/auth/register",
         body: payload,
       });
 

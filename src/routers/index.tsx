@@ -13,67 +13,13 @@ import EditProfileView from "../pages/myProfile/EditProfileView";
 import ListStoreView from "../pages/stores/listStoreView";
 import CreateStoreView from "../pages/stores/createStoreView";
 import EditStoreView from "../pages/stores/editStoreView";
-import ListSpgView from "../pages/spg/listSpgView";
-import ListSupplierView from "../pages/suppliers/listSupplierView";
-import CreateSupplierView from "../pages/suppliers/createSupplierView";
-import EditSupplierView from "../pages/suppliers/editSupplierView";
+import ListUserView from "../pages/user/ListUserView";
 import ListAttendanceView from "../pages/attendance/listAttendanceView";
 import LocationView from "../pages/location/locationView";
-import ListSupplierSpgView from "../pages/suppliers/listSupplierSpgView";
 import ListAttendanceHistoryView from "../pages/attendance/listAttendanceHistoryView";
 
 const getProtectedRouters = (role: string) => {
   const mainRouters: { path: string; element: JSX.Element }[] = [];
-
-  const supplierRouter = [
-    ...[
-      {
-        path: "/",
-        element: <DashboardView />,
-      },
-
-      // spg router
-      {
-        path: "/spg",
-        element: <ListSpgView />,
-      },
-
-      // attendance router
-      {
-        path: "/attendances",
-        element: <ListAttendanceView />,
-      },
-
-      // attendance router
-      {
-        path: "/location",
-        element: <LocationView />,
-      },
-
-      // store router
-      {
-        path: "/stores",
-        element: <ListStoreView />,
-      },
-      {
-        path: "/stores/create",
-        element: <CreateStoreView />,
-      },
-      {
-        path: "/stores/edit/:storeId",
-        element: <EditStoreView />,
-      },
-      //my profile routers
-      {
-        path: "/my-profile",
-        element: <ProfileView />,
-      },
-      {
-        path: "/my-profile/edit/:userId",
-        element: <EditProfileView />,
-      },
-    ],
-  ];
 
   const adminRouter = [
     ...[
@@ -81,28 +27,10 @@ const getProtectedRouters = (role: string) => {
         path: "/",
         element: <DashboardView />,
       },
-      // supplier router
-      {
-        path: "/suppliers",
-        element: <ListSupplierView />,
-      },
-      {
-        path: "/suppliers/create",
-        element: <CreateSupplierView />,
-      },
-      {
-        path: "/suppliers/edit/:userId",
-        element: <EditSupplierView />,
-      },
-      {
-        path: "/suppliers/spg/:userId",
-        element: <ListSupplierSpgView />,
-      },
-
       // spg router
       {
-        path: "/spg",
-        element: <ListSpgView />,
+        path: "/users",
+        element: <ListUserView />,
       },
 
       // attendance router
@@ -157,28 +85,10 @@ const getProtectedRouters = (role: string) => {
       element: <EditProfileView />,
     },
 
-    // supplier router
+    // user router
     {
-      path: "/suppliers",
-      element: <ListSupplierView />,
-    },
-    {
-      path: "/suppliers/create",
-      element: <CreateSupplierView />,
-    },
-    {
-      path: "/suppliers/edit/:userId",
-      element: <EditSupplierView />,
-    },
-    {
-      path: "/suppliers/spg/:userId",
-      element: <ListSupplierSpgView />,
-    },
-
-    // spg router
-    {
-      path: "/spg",
-      element: <ListSpgView />,
+      path: "/users",
+      element: <ListUserView />,
     },
 
     // attendance router
@@ -233,9 +143,6 @@ const getProtectedRouters = (role: string) => {
       break;
     case "SUPERADMIN":
       mainRouters.push(...superAdminRouter);
-      break;
-    case "SUPPLIER":
-      mainRouters.push(...supplierRouter);
       break;
     default:
       break;
