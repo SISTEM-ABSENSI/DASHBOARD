@@ -5,7 +5,7 @@ import { CONFIGS } from "../configs";
 export interface GetTableDataTypes {
   url: string;
   pagination?: boolean | true;
-  page?: number | 1;
+  page?: number | 0;
   size?: number | 10;
   filters?: any;
 }
@@ -20,70 +20,114 @@ export const getHeaders = () => {
 export class ServiceHttp {
   private baseUrl = CONFIGS.baseUrl;
 
-  private handleError(error: any) {
-    console.error("Error:", error);
-    if (error.response) {
-      console.error(
-        "Response Error:",
-        error.response.data.errorMessage || error.message
-      );
-      if (error.response.status === 401) {
-        // localStorage.removeItem(CONFIGS.localStorageKey);
-        // window.location.pathname = "/"; // Redirect to login page
-      }
-      throw new Error(error.response.data.errorMessage || error.message);
-    } else {
-      console.error("Network Error");
-      throw new Error("Network Error");
-    }
-  }
-
-  private async request(config: any) {
-    const headers = getHeaders();
-    try {
-      const result = await axios({ ...config, headers });
-      return result.data;
-    } catch (error: any) {
-      this.handleError(error);
-    }
-  }
-
   public async get({ path }: { path: string }) {
-    return this.request({
-      method: "get",
-      url: this.baseUrl + path,
-    });
+    try {
+      const result = await axios.get(this.baseUrl + path, {
+        headers: {
+          ...getHeaders(),
+        },
+      });
+      return result.data.data;
+    } catch (error: any) {
+      console.log(error.response.data.errorMessage || error.message);
+
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem(CONFIGS.localStorageKey);
+        window.location.pathname = "/";
+      }
+
+      throw Error(error.response.data.errorMessage || error.message);
+    }
   }
 
   public async post({ path, body }: { path: string; body: any }) {
-    return this.request({
-      method: "post",
-      url: this.baseUrl + path,
-      data: body,
-    });
+    try {
+      const result = await axios.post(this.baseUrl + path, body, {
+        headers: {
+          ...getHeaders(),
+        },
+      });
+      return result.data;
+    } catch (error: any) {
+      console.log(error.response.data.errorMessage || error.message);
+
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem(CONFIGS.localStorageKey);
+        window.location.pathname = "/";
+      }
+
+      throw Error(error.response.data.errorMessage || error.message);
+    }
   }
 
   public async patch({ path, body }: { path: string; body: any }) {
-    return this.request({
-      method: "patch",
-      url: this.baseUrl + path,
-      data: body,
-    });
+    try {
+      const result = await axios.patch(this.baseUrl + path, body, {
+        headers: {
+          ...getHeaders(),
+        },
+      });
+      return result.data;
+    } catch (error: any) {
+      console.log(error.response.data.errorMessage || error.message);
+
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem(CONFIGS.localStorageKey);
+        window.location.pathname = "/";
+      }
+
+      throw Error(error.response.data.errorMessage || error.message);
+    }
   }
 
   public async remove({ path }: { path: string }) {
-    return this.request({
-      method: "delete",
-      url: this.baseUrl + path,
-    });
+    try {
+      const result = await axios.delete(this.baseUrl + path, {
+        headers: {
+          ...getHeaders(),
+        },
+      });
+      return result.data;
+    } catch (error: any) {
+      console.log(error.response.data.errorMessage || error.message);
+
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem(CONFIGS.localStorageKey);
+        window.location.pathname = "/";
+      }
+
+      throw Error(error.response.data.errorMessage || error.message);
+    }
   }
 
   public async getTableData(params: GetTableDataTypes) {
-    const { url, page, size, filters } = params;
-    const queryFilter = new URLSearchParams(filters).toString();
-    return this.request({
-      method: "get",
-      url: `${url}?page=${page}&size=${size}&${queryFilter}`,
-    });
+    const { url, pagination, page, size, filters } = params;
+    try {
+      const queryFilter = new URLSearchParams(filters).toString();
+      const result = await axios.get(
+        `${url}?pagination=${pagination}&page=${page}&size=${size}&${queryFilter}`,
+        {
+          headers: {
+            ...getHeaders(),
+          },
+        }
+      );
+
+      console.log(result);
+      return {
+        ...result.data.data,
+        page: page,
+        size: size,
+      };
+    } catch (error: any) {
+      console.log(error.response.data.errorMessage || error.message);
+
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem(CONFIGS.localStorageKey);
+        window.location.pathname = "/";
+      }
+
+      throw Error(error.response.data.errorMessage || error.message);
+    }
   }
 }

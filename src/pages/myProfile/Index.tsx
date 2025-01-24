@@ -1,11 +1,54 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { 
+  Box, 
+  Stack, 
+  Typography, 
+  Card, 
+  Avatar, 
+  Divider,
+  Button,
+  alpha
+} from "@mui/material";
+import { 
+  Person as PersonIcon,
+  Edit as EditIcon,
+  Badge as BadgeIcon,
+  CalendarToday as CalendarIcon
+} from '@mui/icons-material';
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
-import { Card } from "@mui/material";
 import { useHttp } from "../../hooks/http";
 import { useEffect, useState } from "react";
 import { IUserModel } from "../../models/userModel";
 import { convertTime } from "../../utilities/convertTime";
+import { blue } from "@mui/material/colors";
+
+const ProfileItem = ({ icon, label, value }: { icon: React.ReactNode, label: string, value: string }) => (
+  <Stack 
+    direction="row" 
+    spacing={2} 
+    alignItems="center"
+    sx={{ py: 2 }}
+  >
+    <Box
+      sx={{
+        p: 1,
+        borderRadius: 1,
+        bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
+        color: blue[600],
+      }}
+    >
+      {icon}
+    </Box>
+    <Stack spacing={0.5} flex={1}>
+      <Typography variant="body2" color="text.secondary">
+        {label}
+      </Typography>
+      <Typography variant="subtitle1">
+        {value}
+      </Typography>
+    </Stack>
+  </Stack>
+);
 
 const ProfileView = () => {
   const { handleGetRequest } = useHttp();
@@ -13,10 +56,11 @@ const ProfileView = () => {
 
   const getMyProfile = async () => {
     const result = await handleGetRequest({
-      path: "/users/my-profile",
+      path: "/my-profile",
     });
-    if (result?.data) {
-      setDetailProfile(result?.data?.items);
+
+    if (result) {
+      setDetailProfile(result);
     }
   };
 
@@ -36,60 +80,94 @@ const ProfileView = () => {
         ]}
       />
 
-      <Card sx={{ p: 3 }}>
-        <Stack
-          direction={"row"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
+      <Card 
+        elevation={0}
+        sx={{ 
+          borderRadius: 2,
+          border: (theme) => `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+        }}
+      >
+        <Box
+          sx={{
+            p: 3,
+            background: `linear-gradient(135deg, ${alpha(blue[600], 0.1)} 0%, ${alpha(blue[100], 0.1)} 100%)`,
+          }}
         >
-          <h1>My Profile</h1>
-          {/* <Button
-            variant="outlined"
-            onClick={() =>
-              navigation("/my-profile/edit/" + detailProfile?.userId)
-            }
+          <Stack 
+            direction="row" 
+            alignItems="center" 
+            justifyContent="space-between"
+            spacing={2}
           >
-            Edit
-          </Button> */}
-        </Stack>
-        <table>
-          <thead>
-            <th></th>
-            <th></th>
-            <th></th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <Typography fontWeight={"Bold"}>User Name</Typography>
-              </td>
-              <td>:</td>
-              <td>
-                <Typography>{detailProfile?.userName}</Typography>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <Typography fontWeight={"Bold"}>Role</Typography>
-              </td>
-              <td>:</td>
-              <td>
-                <Typography>{detailProfile?.userRole}</Typography>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <Typography fontWeight={"Bold"}>Dibuat Pada</Typography>
-              </td>
-              <td>:</td>
-              <td>
-                <Typography>
-                  {convertTime(detailProfile?.createdAt + "")}
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Avatar
+                sx={{
+                  width: 64,
+                  height: 64,
+                  bgcolor: blue[600],
+                  fontSize: 32,
+                }}
+              >
+                {detailProfile?.userName?.charAt(0).toUpperCase()}
+              </Avatar>
+              <Stack spacing={0.5}>
+                <Typography variant="h5" fontWeight="600">
+                  {detailProfile?.userName}
                 </Typography>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                <Typography 
+                  variant="body2" 
+                  sx={{
+                    px: 1.5,
+                    py: 0.5,
+                    bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
+                    borderRadius: 1,
+                    color: 'primary.main',
+                    display: 'inline-flex',
+                    width: 'fit-content'
+                  }}
+                >
+                  {detailProfile?.userRole}
+                </Typography>
+              </Stack>
+            </Stack>
+
+            <Button
+              variant="contained"
+              startIcon={<EditIcon />}
+              sx={{ 
+                px: 3,
+                py: 1,
+                boxShadow: 'none',
+                '&:hover': { boxShadow: 'none' }
+              }}
+              // onClick={() => navigation("/my-profile/edit/" + detailProfile?.userId)}
+            >
+              Edit Profile
+            </Button>
+          </Stack>
+        </Box>
+
+        <Divider />
+
+        <Box sx={{ p: 3 }}>
+          <Stack spacing={1}>
+            <ProfileItem
+              icon={<PersonIcon />}
+              label="Username"
+              value={detailProfile?.userName || '-'}
+            />
+            <ProfileItem
+              icon={<BadgeIcon />}
+              label="Role"
+              value={detailProfile?.userRole || '-'}
+            />
+            <ProfileItem
+              icon={<CalendarIcon />}
+              label="Created At"
+              value={convertTime(detailProfile?.createdAt + "") || '-'}
+            />
+          </Stack>
+        </Box>
       </Card>
     </Box>
   );

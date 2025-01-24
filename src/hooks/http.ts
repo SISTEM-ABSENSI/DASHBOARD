@@ -62,9 +62,16 @@ export const useHttp = () => {
         path,
         body,
       });
+
+      setAppAlert({
+        isDisplayAlert: true,
+        message: "Berhasil dibuat",
+        alertType: "success",
+      });
+
       return result;
     } catch (error: any) {
-      console.error(error);
+      console.error(error?.message);
       setAppAlert({
         isDisplayAlert: true,
         message: error?.message,
@@ -77,6 +84,11 @@ export const useHttp = () => {
     try {
       const result = await serviceHttp.remove({
         path,
+      });
+      setAppAlert({
+        isDisplayAlert: true,
+        message: "Berhasil dihapus",
+        alertType: "info",
       });
       return result;
     } catch (error: any) {
@@ -95,6 +107,11 @@ export const useHttp = () => {
         path,
         body,
       });
+      setAppAlert({
+        isDisplayAlert: true,
+        message: "Berhasil diperbaharui",
+        alertType: "success",
+      });
       return result;
     } catch (error: any) {
       console.error(error?.message);
@@ -111,7 +128,7 @@ export const useHttp = () => {
       const result = await serviceHttp.getTableData({
         url: CONFIGS.baseUrl + props.path,
         pagination: true,
-        page: props.page || 1,
+        page: props.page || 0,
         size: props.size || 10,
         filters: props.filter,
       });

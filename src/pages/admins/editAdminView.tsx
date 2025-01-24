@@ -12,36 +12,38 @@ import {
   Grid,
   FormControl,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useHttp } from "../../hooks/http";
-import { IUserCreateRequestModel } from "../../models/userModel";
+import { IUserUpdateRequestModel } from "../../models/userModel";
 import { IconMenus } from "../../components/icon";
 import BreadCrumberStyle from "../../components/breadcrumb/Index";
 
 export default function EditAdminView() {
   const { handleUpdateRequest, handleGetRequest } = useHttp();
   const { adminId } = useParams();
+  const navigate = useNavigate();
 
-  const [userEmail, setUserEmail] = useState("");
+  const [userContact, setUserContact] = useState("");
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userRole, setUserRole] = useState("");
+  const [userRole, setUserRole] = useState("admin");
 
   const handleSubmit = async () => {
     try {
-      const payload: IUserCreateRequestModel = {
-        user_name: userName,
-        email: userEmail,
-        password: userPassword,
-        role: userRole,
+      const payload: IUserUpdateRequestModel = {
+        userId: adminId!,
+        userName,
+        userContact,
+        userPassword,
+        userRole,
       };
 
       await handleUpdateRequest({
-        path: "/users/" + adminId,
+        path: "/admins",
         body: payload,
       });
 
-      window.history.back();
+      navigate("/admins");
     } catch (error: unknown) {
       console.log(error);
     }
@@ -49,13 +51,14 @@ export default function EditAdminView() {
 
   const getDetailUser = async () => {
     const result = await handleGetRequest({
-      path: "/users/" + adminId,
+      path: "/admins/detail/" + adminId,
     });
 
+    console.log(result);
     if (result) {
-      setUserEmail(result?.data?.email);
-      setUserName(result?.data?.user_name);
-      setUserRole(result?.data?.role);
+      setUserContact(result?.userContact || "");
+      setUserName(result?.userName);
+      setUserRole(result?.userRole);
     }
   };
 
@@ -90,7 +93,7 @@ export default function EditAdminView() {
           color="primary"
           fontWeight={"bold"}
         >
-          Tambah Admin
+          Edit Admin
         </Typography>
         <Box
           component="form"
@@ -109,22 +112,18 @@ export default function EditAdminView() {
                 value={userName}
                 type="text"
                 fullWidth
-                onChange={(e) => {
-                  setUserName(e.target.value);
-                }}
+                onChange={(e) => setUserName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="E-mail"
+                label="Kontak"
                 id="outlined-start-adornment"
                 sx={{ m: 1 }}
-                value={userEmail}
+                value={userContact}
+                type="text"
                 fullWidth
-                type="email"
-                onChange={(e) => {
-                  setUserEmail(e.target.value);
-                }}
+                onChange={(e) => setUserContact(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -135,9 +134,7 @@ export default function EditAdminView() {
                 value={userPassword}
                 type="password"
                 fullWidth
-                onChange={(e) => {
-                  setUserPassword(e.target.value);
-                }}
+                onChange={(e) => setUserPassword(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -153,16 +150,14 @@ export default function EditAdminView() {
                   sx={{ m: 1 }}
                   onChange={(e) => setUserRole(e.target.value)}
                 >
-                  <MenuItem selected value={userRole}>
-                    {userRole}
-                  </MenuItem>
-                  <MenuItem value={"USER"}>USER</MenuItem>
-                  <MenuItem value={"ADMIN"}>ADMIN</MenuItem>
+                  <MenuItem value="admin">Admin</MenuItem>
+                  <MenuItem value="superAdmin">Super Admin</MenuItem>
+                  <MenuItem value="supplier">Supplier</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
           </Grid>
-          <Stack direction={"row"} justifyContent="flex-end">
+          <Stack direction="row" justifyContent="flex-end">
             <Button
               sx={{
                 m: 1,
@@ -171,7 +166,7 @@ export default function EditAdminView() {
                 color: "#FFF",
                 fontWeight: "bold",
               }}
-              variant={"contained"}
+              variant="contained"
               onClick={handleSubmit}
             >
               Submit
