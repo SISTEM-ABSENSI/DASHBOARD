@@ -115,30 +115,6 @@ export default function AppLayout() {
 
   const menuItems = [];
 
-  const supplierMenus = [
-    { title: "Dashboard", link: "/", icon: <IconMenus.dashboard /> },
-    {
-      title: "Attendance",
-      link: "/attendances",
-      icon: <IconMenus.attendance />,
-    },
-    {
-      title: "Stores",
-      link: "/stores",
-      icon: <IconMenus.store />,
-    },
-    {
-      title: "Location",
-      link: "/location",
-      icon: <IconMenus.location />,
-    },
-    {
-      title: "Users",
-      link: "/users",
-      icon: <IconMenus.user />,
-    },
-  ];
-
   const adminMenus = [
     { title: "Dashboard", link: "/", icon: <IconMenus.dashboard /> },
     {
