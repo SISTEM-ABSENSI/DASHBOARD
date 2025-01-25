@@ -131,7 +131,8 @@ export default function CreateStoreView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Name"
+                label="Nama Toko"
+                placeholder="example: Toko A"
                 id="outlined-start-adornment"
                 value={storeName}
                 fullWidth
@@ -142,7 +143,8 @@ export default function CreateStoreView() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Alamat"
+                label="Alamat Toko"
+                placeholder="example: Jl. Raya"
                 id="outlined-start-adornment"
                 value={storeAddress}
                 fullWidth
@@ -155,6 +157,7 @@ export default function CreateStoreView() {
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Latitude"
+                placeholder="example: -6.1754"
                 id="outlined-start-adornment"
                 value={storeLatitude}
                 fullWidth
@@ -167,6 +170,7 @@ export default function CreateStoreView() {
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Longitude"
+                placeholder="example: 106.8272"
                 id="outlined-start-adornment"
                 value={storeLongitude}
                 type="text"

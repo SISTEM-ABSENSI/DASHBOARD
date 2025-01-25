@@ -153,6 +153,7 @@ export default function EditStoreView() {
                 value={storeName}
                 type="text"
                 fullWidth
+                placeholder="example: Toko A"
                 onChange={(e) => {
                   setStoreName(e.target.value);
                 }}
@@ -164,6 +165,7 @@ export default function EditStoreView() {
                 value={storeAddress}
                 type="text"
                 fullWidth
+                placeholder="example: Jl. Raya"
                 onChange={(e) => {
                   setStoreAddress(e.target.value);
                 }}
@@ -172,6 +174,7 @@ export default function EditStoreView() {
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Latitude"
+                placeholder="example: -6.1754"
                 id="outlined-start-adornment"
                 value={storeLatitude}
                 fullWidth
@@ -184,6 +187,7 @@ export default function EditStoreView() {
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Longitude"
+                placeholder="example: 106.8272"
                 id="outlined-start-adornment"
                 value={storeLongitude}
                 type="text"

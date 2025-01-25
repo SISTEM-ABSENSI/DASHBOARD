@@ -144,7 +144,6 @@ export default function CreateAdminView() {
                     Admin
                   </MenuItem>
                   <MenuItem value={"superAdmin"}>Super Admin</MenuItem>
-                  <MenuItem value={"supplier"}>Supplier</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

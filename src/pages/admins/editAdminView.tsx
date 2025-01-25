@@ -152,7 +152,6 @@ export default function EditAdminView() {
                 >
                   <MenuItem value="admin">Admin</MenuItem>
                   <MenuItem value="superAdmin">Super Admin</MenuItem>
-                  <MenuItem value="supplier">Supplier</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
