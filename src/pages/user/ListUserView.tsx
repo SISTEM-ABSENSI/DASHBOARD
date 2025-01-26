@@ -104,9 +104,9 @@ export default function ListUserView() {
       <BreadCrumberStyle
         navigation={[
           {
-            label: "SPG",
-            link: "/spg",
-            icon: <IconMenus.admin fontSize="small" />,
+            label: "User",
+            link: "/user",
+            icon: <IconMenus.user fontSize="small" />,
           },
         ]}
       />

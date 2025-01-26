@@ -26,17 +26,26 @@ export default function ListAttendanceView() {
     page: 0,
   });
 
-  const getTableData = async ({ search }: { search: string }) => {
+  const getTableData = async ({
+    search,
+    startDate,
+    endDate,
+  }: {
+    search: string;
+    startDate?: string;
+    endDate?: string;
+  }) => {
     try {
       setLoading(true);
       const result = await handleGetTableDataRequest({
         path: "/attendances",
         page: paginationModel.page,
         size: paginationModel.pageSize,
-        filter: { search },
+        filter: { search, startDate, endDate },
       });
 
       if (result && result?.items) {
+        console.log(result?.items);
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }
@@ -48,7 +57,7 @@ export default function ListAttendanceView() {
   };
 
   useEffect(() => {
-    getTableData({ search: "" });
+    getTableData({ search: "", startDate: "", endDate: "" });
   }, [paginationModel]);
 
   const columns: GridColDef[] = [
@@ -59,6 +68,20 @@ export default function ListAttendanceView() {
       valueGetter: (params) => params.row.user?.userName || "",
       editable: true,
     },
+    // {
+    //   field: "productImage",
+    //   flex: 1,
+    //   renderHeader: () => <strong>{"Image"}</strong>,
+    //   renderCell: (params) => (
+    //     <img
+    //       src={params.value}
+    //       style={{
+    //         width: 80,
+    //         height: 80,
+    //       }}
+    //     />
+    //   ),
+    // },
     {
       field: "storeName",
       flex: 1,
@@ -130,7 +153,7 @@ export default function ListAttendanceView() {
       getActions: ({ row }) => {
         return [
           <Chip
-            label={"History"}
+            label={"Detail"}
             color={"success"}
             variant="outlined"
             onClick={() =>
@@ -144,6 +167,9 @@ export default function ListAttendanceView() {
 
   function CustomToolbar() {
     const [search, setSearch] = useState<string>("");
+    const [startDate, setStartDate] = useState<string>("");
+    const [endDate, setEndDate] = useState<string>("");
+
     return (
       <GridToolbarContainer sx={{ justifyContent: "space-between", mb: 2 }}>
         <Stack direction="row" spacing={2}>
@@ -152,12 +178,31 @@ export default function ListAttendanceView() {
         <Stack direction="row" spacing={1} alignItems="center">
           <TextField
             size="small"
+            type="date"
+            label="Start Date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            size="small"
+            type="date"
+            label="End Date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            size="small"
             placeholder="search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Button variant="outlined" onClick={() => getTableData({ search })}>
-            Cari
+          <Button
+            variant="outlined"
+            onClick={() => getTableData({ search, startDate, endDate })}
+          >
+            Search
           </Button>
         </Stack>
       </GridToolbarContainer>

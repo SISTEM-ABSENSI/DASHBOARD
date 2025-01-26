@@ -36,7 +36,7 @@ import { useAppContext } from "../context/app.context";
 import { IconMenus } from "../components/icon";
 import { useToken } from "../hooks/token";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -136,11 +136,6 @@ export default function AppLayout() {
       title: "Users",
       link: "/users",
       icon: <IconMenus.user />,
-    },
-    {
-      title: "Admins",
-      link: "/admins",
-      icon: <IconMenus.admin />,
     },
   ];
 

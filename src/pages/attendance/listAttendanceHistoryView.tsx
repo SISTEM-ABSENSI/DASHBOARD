@@ -32,6 +32,7 @@ export default function ListAttendanceHistoryView() {
       });
 
       if (result && result?.items) {
+        console.log(result?.items);
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }

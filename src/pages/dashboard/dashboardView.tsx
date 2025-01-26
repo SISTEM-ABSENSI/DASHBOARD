@@ -161,7 +161,7 @@ const DashboardView = () => {
           <Grid item md={3} sm={6} xs={12}>
             <DashboardCard
               icon={IconMenus.user}
-              title="Total Users"
+              title="Users"
               value={statistic.totalUsers}
               color={blue[500]}
               onClick={() => navigation("/users")}
@@ -171,7 +171,7 @@ const DashboardView = () => {
           <Grid item md={3} sm={6} xs={12}>
             <DashboardCard
               icon={IconMenus.admin}
-              title="Total Admins"
+              title="Admins"
               value={statistic.totalAdmins}
               color={green[500]}
               onClick={() => navigation("/admins")}
@@ -191,7 +191,7 @@ const DashboardView = () => {
           <Grid item md={3} sm={6} xs={12}>
             <DashboardCard
               icon={IconMenus.store}
-              title="Total Stores"
+              title="Stores"
               value={statistic.totalStores}
               color={orange[500]}
               onClick={() => navigation("/stores")}
