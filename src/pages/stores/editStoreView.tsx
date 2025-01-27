@@ -114,7 +114,7 @@ export default function EditStoreView() {
       <BreadCrumberStyle
         navigation={[
           {
-            label: "Store",
+            label: "Clinic",
             link: "/stores",
             icon: <IconMenus.store fontSize="small" />,
           },
@@ -136,7 +136,7 @@ export default function EditStoreView() {
           color="primary"
           fontWeight={"bold"}
         >
-          Edit Store
+          Edit Clinic
         </Typography>
         <Box
           component="form"
@@ -149,11 +149,11 @@ export default function EditStoreView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nama Toko"
+                label="Nama Clinic"
                 value={storeName}
                 type="text"
                 fullWidth
-                placeholder="example: Toko A"
+                placeholder="example: Clinic A"
                 onChange={(e) => {
                   setStoreName(e.target.value);
                 }}

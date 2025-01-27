@@ -105,14 +105,14 @@ const DetailAttendance: React.FC = () => {
                   gutterBottom
                   sx={{ fontWeight: "bold", color: "#333" }}
                 >
-                  Store Information
+                  Clinic Information
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  <strong>Store Name:</strong>{" "}
+                  <strong>Clinic Name:</strong>{" "}
                   {detailAttendance.store.storeName}
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  <strong>Store Address:</strong>{" "}
+                  <strong>Clinic Address:</strong>{" "}
                   {detailAttendance.store.storeAddress}
                 </Typography>
                 <Typography

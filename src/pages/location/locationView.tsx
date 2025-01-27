@@ -100,17 +100,17 @@ export default function LocationView() {
                 <LocationIcon sx={{ color: blue[600], fontSize: 28 }} />
                 <Stack spacing={0.5}>
                   <Typography variant="h5" fontWeight="600">
-                    Store Locations
+                    Clinic Locations
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {filteredStores.length} stores found
+                    {filteredStores.length} clinics found
                   </Typography>
                 </Stack>
               </Stack>
 
               <TextField
                 size="small"
-                placeholder="Search stores..."
+                placeholder="Search clinics..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 InputProps={{

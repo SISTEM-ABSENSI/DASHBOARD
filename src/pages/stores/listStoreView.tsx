@@ -154,7 +154,7 @@ export default function ListStoreView() {
             variant="outlined"
             onClick={() => navigation("/stores/create")}
           >
-            Create Store
+            Create
           </Button>
         </Stack>
         <Stack direction={"row"} spacing={1} alignItems={"center"}>
@@ -177,7 +177,7 @@ export default function ListStoreView() {
       <BreadCrumberStyle
         navigation={[
           {
-            label: "Stores",
+            label: "Clinic",
             link: "/stores",
             icon: <IconMenus.store fontSize="small" />,
           },

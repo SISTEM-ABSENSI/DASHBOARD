@@ -123,7 +123,7 @@ export default function AppLayout() {
       icon: <IconMenus.location />,
     },
     {
-      title: "Stores",
+      title: "Clinic",
       link: "/stores",
       icon: <IconMenus.store />,
     },
@@ -152,7 +152,7 @@ export default function AppLayout() {
       icon: <IconMenus.location />,
     },
     {
-      title: "Stores",
+      title: "Clinic",
       link: "/stores",
       icon: <IconMenus.store />,
     },

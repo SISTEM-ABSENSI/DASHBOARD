@@ -12,7 +12,6 @@ import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
 import { ISpgModel } from "../../models/spgModel";
 import { convertTime } from "../../utilities/convertTime";
-import { IScheduleModel } from "../../models/scheduleModel";
 import { useNavigate } from "react-router-dom";
 
 export default function ListAttendanceView() {
@@ -209,7 +208,7 @@ export default function ListAttendanceView() {
         <DataGrid
           rows={tableData}
           columns={columns}
-          getRowId={(row: IScheduleModel) => row.scheduleId}
+          getRowId={(row: any) => row?.scheduleId}
           editMode="row"
           autoHeight
           sx={{ padding: 2 }}
