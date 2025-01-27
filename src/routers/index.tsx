@@ -17,6 +17,7 @@ import ListUserView from "../pages/user/ListUserView";
 import ListAttendanceView from "../pages/attendance/listAttendanceView";
 import LocationView from "../pages/location/locationView";
 import ListAttendanceHistoryView from "../pages/attendance/listAttendanceHistoryView";
+import DetailAttendance from "../pages/attendance/DetailAttendance";
 
 const getProtectedRouters = (role: string) => {
   const mainRouters: { path: string; element: JSX.Element }[] = [];
@@ -96,6 +97,12 @@ const getProtectedRouters = (role: string) => {
       path: "/attendances",
       element: <ListAttendanceView />,
     },
+
+    {
+      path: "/attendances/detail/:attendanceId",
+      element: <DetailAttendance />,
+    },
+
 
     {
       path: "/attendances/histories/:attendanceHistoryUserId",

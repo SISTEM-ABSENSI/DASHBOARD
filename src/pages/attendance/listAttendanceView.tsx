@@ -12,6 +12,7 @@ import BreadCrumberStyle from "../../components/breadcrumb/Index";
 import { IconMenus } from "../../components/icon";
 import { ISpgModel } from "../../models/spgModel";
 import { convertTime } from "../../utilities/convertTime";
+import { IScheduleModel } from "../../models/scheduleModel";
 import { useNavigate } from "react-router-dom";
 
 export default function ListAttendanceView() {
@@ -49,8 +50,8 @@ export default function ListAttendanceView() {
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }
-    } catch (error: any) {
-      console.log(error);
+    } catch (error: unknown) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -68,20 +69,6 @@ export default function ListAttendanceView() {
       valueGetter: (params) => params.row.user?.userName || "",
       editable: true,
     },
-    // {
-    //   field: "productImage",
-    //   flex: 1,
-    //   renderHeader: () => <strong>{"Image"}</strong>,
-    //   renderCell: (params) => (
-    //     <img
-    //       src={params.value}
-    //       style={{
-    //         width: 80,
-    //         height: 80,
-    //       }}
-    //     />
-    //   ),
-    // },
     {
       field: "storeName",
       flex: 1,
@@ -156,9 +143,7 @@ export default function ListAttendanceView() {
             label={"Detail"}
             color={"success"}
             variant="outlined"
-            onClick={() =>
-              navigation("/attendances/histories/" + row.scheduleUserId)
-            }
+            onClick={() => navigation("/attendances/detail/" + row.scheduleId)}
           />,
         ];
       },
@@ -224,7 +209,7 @@ export default function ListAttendanceView() {
         <DataGrid
           rows={tableData}
           columns={columns}
-          getRowId={(row: any) => row.scheduleId}
+          getRowId={(row: IScheduleModel) => row.scheduleId}
           editMode="row"
           autoHeight
           sx={{ padding: 2 }}
