@@ -225,12 +225,12 @@ const DashboardView = () => {
                     }}
                   />
                   <Typography variant="h6" fontWeight="600">
-                    Store Locations
+                    Clinic Locations
                   </Typography>
                 </Stack>
 
                 <Typography variant="body2" color="text.secondary">
-                  {coordinates.length} stores
+                  {coordinates.length} clinics
                 </Typography>
               </Stack>
 

@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IScheduleModel } from "../../models/scheduleModel";
 import { IAttendanceHistoryModel } from "../../models/attendanceHistoryModel";
+import { convertTime, formatISOToString } from "../../utilities/convertTime";
 
 const DetailAttendance: React.FC = () => {
   const { handleGetRequest } = useHttp();
@@ -28,7 +29,7 @@ const DetailAttendance: React.FC = () => {
     const result = await handleGetRequest({
       path: "/attendances/detail/" + attendanceId,
     });
-
+    console.log(result);
     if (result) {
       setDetailAttendance(result);
     }
@@ -77,26 +78,41 @@ const DetailAttendance: React.FC = () => {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  <strong>Schedule Name:</strong>{" "}
-                  {detailAttendance.scheduleName}
+                  <strong>Name:</strong> {detailAttendance.scheduleName}
                 </Typography>
-                <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  <strong>Schedule Description:</strong>{" "}
-                  {detailAttendance.scheduleDescription}
-                </Typography>
-                <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  <strong>Schedule Status:</strong>{" "}
-                  {detailAttendance.scheduleStatus}
+                <Typography
+                  variant="body1"
+                  sx={{
+                    marginBottom: 1,
+                  }}
+                >
+                  <strong>Status:</strong>{" "}
+                  {detailAttendance.scheduleStatus === "checkout" && (
+                    <span
+                      style={{
+                        color: detailAttendance.scheduleOnTime
+                          ? "green"
+                          : "red",
+                      }}
+                    >
+                      {detailAttendance.scheduleOnTime ? "On Time" : "Late"}
+                    </span>
+                  )}
+                  {detailAttendance.scheduleStatus !== "checkout" && (
+                    <span>{detailAttendance.scheduleStatus}</span>
+                  )}
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
                   <strong>Start Date:</strong>{" "}
-                  {new Date(
-                    detailAttendance.scheduleStartDate
-                  ).toLocaleString()}
+                  {convertTime(detailAttendance.scheduleStartDate)}
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
                   <strong>End Date:</strong>{" "}
-                  {new Date(detailAttendance.scheduleEndDate).toLocaleString()}
+                  {convertTime(detailAttendance.scheduleEndDate)}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: 1 }}>
+                  <strong>Description:</strong>{" "}
+                  {detailAttendance.scheduleDescription}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -144,7 +160,7 @@ const DetailAttendance: React.FC = () => {
                   <Box sx={{ marginBottom: 2 }}>
                     <Typography variant="body1" sx={{ marginBottom: 1 }}>
                       <strong>History Time:</strong>{" "}
-                      {new Date(history.attendanceHistoryTime).toLocaleString()}
+                      {formatISOToString(history.attendanceHistoryTime)}
                     </Typography>
                     <Typography variant="body1" sx={{ marginBottom: 1 }}>
                       <strong>Category:</strong>{" "}

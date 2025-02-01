@@ -83,7 +83,7 @@ export default function ListAttendanceView() {
     },
     {
       field: "scheduleStatus",
-      renderHeader: () => <strong>{"STATUS"}</strong>,
+      renderHeader: () => <strong>{"Status"}</strong>,
       flex: 1,
       editable: true,
       renderCell: (params) => {
@@ -118,14 +118,14 @@ export default function ListAttendanceView() {
     },
     {
       field: "scheduleStartDate",
-      renderHeader: () => <strong>{"START"}</strong>,
+      renderHeader: () => <strong>{"Start"}</strong>,
       flex: 1,
       editable: true,
       valueFormatter: (item) => convertTime(item.value),
     },
     {
       field: "scheduleEndDate",
-      renderHeader: () => <strong>{"END"}</strong>,
+      renderHeader: () => <strong>{"End"}</strong>,
       flex: 1,
       editable: true,
       valueFormatter: (item) => convertTime(item.value),
