@@ -15,15 +15,35 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IScheduleModel } from "../../models/scheduleModel";
 import { IAttendanceHistoryModel } from "../../models/attendanceHistoryModel";
-import { convertTime, formatISOToString } from "../../utilities/convertTime";
+import { convertTime } from "../../utilities/convertTime";
+
+function compareAttendanceWithSchedule({
+  schedule,
+  attendanceHistories,
+}: {
+  schedule: IScheduleModel;
+  attendanceHistories: IAttendanceHistoryModel[];
+}) {
+  const findAttendance = attendanceHistories?.find(
+    (value) => value.attendanceHistoryCategory === "checkout"
+  );
+
+  const attendanceHistoryTime = new Date(
+    findAttendance?.attendanceHistoryTime! ?? ""
+  );
+  const scheduleEndDate = new Date(schedule?.scheduleEndDate);
+  return attendanceHistoryTime < scheduleEndDate;
+}
 
 const DetailAttendance: React.FC = () => {
   const { handleGetRequest } = useHttp();
+  const { attendanceId } = useParams();
+
   const [detailAttendance, setDetailAttendance] = useState<IScheduleModel>();
   const [detailAttendanceHistory, setDetailAttendanceHistory] = useState<
     IAttendanceHistoryModel[]
   >([]);
-  const { attendanceId } = useParams();
+  const [loading, setLoading] = useState(true);
 
   const getDetailAttendance = async () => {
     const result = await handleGetRequest({
@@ -48,10 +68,23 @@ const DetailAttendance: React.FC = () => {
       setDetailAttendanceHistory(result.items);
     }
   };
+
+  const getDetail = async () => {
+    await getDetailAttendance();
+    await getDetailAttendanceHistory();
+    setLoading(false);
+  };
+
   useEffect(() => {
-    getDetailAttendance();
-    getDetailAttendanceHistory();
+    getDetail();
   }, []);
+
+  if (loading) return <Typography>Loading...</Typography>;
+
+  const isScheduleOnTime = compareAttendanceWithSchedule({
+    schedule: detailAttendance!,
+    attendanceHistories: detailAttendanceHistory,
+  });
 
   return (
     <Box sx={{ padding: 4, backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
@@ -86,16 +119,14 @@ const DetailAttendance: React.FC = () => {
                     marginBottom: 1,
                   }}
                 >
-                  <strong>Status:</strong>{" "}
+                  <strong>Statu:</strong>{" "}
                   {detailAttendance.scheduleStatus === "checkout" && (
                     <span
                       style={{
-                        color: detailAttendance.scheduleOnTime
-                          ? "green"
-                          : "red",
+                        color: isScheduleOnTime === true ? "green" : "red",
                       }}
                     >
-                      {detailAttendance.scheduleOnTime ? "On Time" : "Late"}
+                      {isScheduleOnTime === true ? "On Time" : "Late"}
                     </span>
                   )}
                   {detailAttendance.scheduleStatus !== "checkout" && (
@@ -160,7 +191,7 @@ const DetailAttendance: React.FC = () => {
                   <Box sx={{ marginBottom: 2 }}>
                     <Typography variant="body1" sx={{ marginBottom: 1 }}>
                       <strong>History Time:</strong>{" "}
-                      {formatISOToString(history.attendanceHistoryTime)}
+                      {convertTime(history.attendanceHistoryTime)}
                     </Typography>
                     <Typography variant="body1" sx={{ marginBottom: 1 }}>
                       <strong>Category:</strong>{" "}

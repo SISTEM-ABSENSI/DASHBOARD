@@ -11,7 +11,7 @@ export interface IScheduleModel extends IRootModel {
   scheduleStartDate: string;
   scheduleEndDate: string;
   scheduleStatus: "waiting" | "checkin" | "checkout";
-  scheduleOnTime: boolean;
+  scheduleOntime: boolean;
   user: IUserModel;
   store: IStoreModel;
 }
