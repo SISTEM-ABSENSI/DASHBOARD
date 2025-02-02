@@ -64,14 +64,14 @@ export default function ListAttendanceView() {
     {
       field: "userName",
       flex: 1,
-      renderHeader: () => <strong>{"User"}</strong>,
+      renderHeader: () => <strong>{"Employee"}</strong>,
       valueGetter: (params) => params.row.user?.userName || "",
       editable: true,
     },
     {
       field: "storeName",
       flex: 1,
-      renderHeader: () => <strong>{"Store"}</strong>,
+      renderHeader: () => <strong>{"Clinic"}</strong>,
       valueGetter: (params) => params.row.store?.storeName || "",
       editable: true,
     },

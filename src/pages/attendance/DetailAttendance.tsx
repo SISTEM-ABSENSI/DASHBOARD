@@ -159,14 +159,13 @@ const DetailAttendance: React.FC = () => {
                   gutterBottom
                   sx={{ fontWeight: "bold", color: "#333" }}
                 >
-                  Clinic Information
+                  Clinic
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  <strong>Clinic Name:</strong>{" "}
-                  {detailAttendance.store.storeName}
+                  <strong>Name:</strong> {detailAttendance.store.storeName}
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  <strong>Clinic Address:</strong>{" "}
+                  <strong>Address:</strong>{" "}
                   {detailAttendance.store.storeAddress}
                 </Typography>
                 <Typography
@@ -174,13 +173,13 @@ const DetailAttendance: React.FC = () => {
                   gutterBottom
                   sx={{ fontWeight: "bold", color: "#333", marginTop: 2 }}
                 >
-                  User Information
+                  Employee
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  <strong>User Name:</strong> {detailAttendance.user.userName}
+                  <strong>Name:</strong> {detailAttendance.user.userName}
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  <strong>User Role:</strong> {detailAttendance.user.userRole}
+                  <strong>Role:</strong> {detailAttendance.user.userRole}
                 </Typography>
               </Grid>
             </Grid>

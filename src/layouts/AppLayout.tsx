@@ -133,7 +133,7 @@ export default function AppLayout() {
       icon: <IconMenus.attendance />,
     },
     {
-      title: "Users",
+      title: "Employee",
       link: "/users",
       icon: <IconMenus.user />,
     },
@@ -157,7 +157,7 @@ export default function AppLayout() {
       icon: <IconMenus.store />,
     },
     {
-      title: "Users",
+      title: "Employee",
       link: "/users",
       icon: <IconMenus.user />,
     },

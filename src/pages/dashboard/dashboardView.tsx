@@ -161,7 +161,7 @@ const DashboardView = () => {
           <Grid item md={3} sm={6} xs={12}>
             <DashboardCard
               icon={IconMenus.user}
-              title="Users"
+              title="Employee"
               value={statistic.totalUsers}
               color={blue[500]}
               onClick={() => navigation("/users")}
