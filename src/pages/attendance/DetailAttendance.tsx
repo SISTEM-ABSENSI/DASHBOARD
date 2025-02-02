@@ -25,14 +25,14 @@ function compareAttendanceWithSchedule({
   attendanceHistories: IAttendanceHistoryModel[];
 }) {
   const findAttendance = attendanceHistories?.find(
-    (value) => value.attendanceHistoryCategory === "checkout"
+    (value) => value.attendanceHistoryCategory === "checkin"
   );
 
   const attendanceHistoryTime = new Date(
     findAttendance?.attendanceHistoryTime! ?? ""
   );
-  const scheduleEndDate = new Date(schedule?.scheduleEndDate);
-  return attendanceHistoryTime < scheduleEndDate;
+  const scheduleStartDate = new Date(schedule?.scheduleStartDate);
+  return attendanceHistoryTime < scheduleStartDate;
 }
 
 const DetailAttendance: React.FC = () => {
@@ -119,8 +119,15 @@ const DetailAttendance: React.FC = () => {
                     marginBottom: 1,
                   }}
                 >
-                  <strong>Statu:</strong>{" "}
-                  {detailAttendance.scheduleStatus === "checkout" && (
+                  <strong>Status:</strong>{" "}
+                  <span
+                    style={{
+                      color: isScheduleOnTime === true ? "green" : "red",
+                    }}
+                  >
+                    {isScheduleOnTime === true ? "On Time" : "Late"}
+                  </span>
+                  {/* {detailAttendance.scheduleStatus === "checkin" && (
                     <span
                       style={{
                         color: isScheduleOnTime === true ? "green" : "red",
@@ -128,10 +135,10 @@ const DetailAttendance: React.FC = () => {
                     >
                       {isScheduleOnTime === true ? "On Time" : "Late"}
                     </span>
-                  )}
-                  {detailAttendance.scheduleStatus !== "checkout" && (
+                  )} */}
+                  {/* {detailAttendance.scheduleStatus !== "checkout" && (
                     <span>{detailAttendance.scheduleStatus}</span>
-                  )}
+                  )} */}
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
                   <strong>Start Date:</strong>{" "}
