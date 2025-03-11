@@ -13,7 +13,7 @@ import { IconMenus } from "../../components/icon";
 import { ISpgModel } from "../../models/spgModel";
 import { convertTime } from "../../utilities/convertTime";
 
-export default function ListUserView() {
+export default function ListEmployeeView() {
   const [tableData, setTableData] = useState<ISpgModel[]>([]);
   const { handleGetTableDataRequest } = useHttp();
 
@@ -92,7 +92,7 @@ export default function ListUserView() {
             onChange={(e) => setSearch(e.target.value)}
           />
           <Button variant="outlined" onClick={() => getTableData({ search })}>
-            Cari
+            Search
           </Button>
         </Stack>
       </GridToolbarContainer>
@@ -104,9 +104,9 @@ export default function ListUserView() {
       <BreadCrumberStyle
         navigation={[
           {
-            label: "SPG",
-            link: "/spg",
-            icon: <IconMenus.admin fontSize="small" />,
+            label: "Employees",
+            link: "/user",
+            icon: <IconMenus.user fontSize="small" />,
           },
         ]}
       />

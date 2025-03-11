@@ -50,7 +50,7 @@ export default function ListAttendanceHistoryView() {
     {
       field: "attendanceHistoryTime",
       flex: 1,
-      renderHeader: () => <strong>{"Time"}</strong>,
+      renderHeader: () => <strong>{"TIME"}</strong>,
       valueFormatter: (item) => convertTime(item.value),
       editable: true,
     },

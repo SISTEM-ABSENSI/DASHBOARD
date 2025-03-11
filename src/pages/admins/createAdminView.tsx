@@ -76,7 +76,7 @@ export default function CreateAdminView() {
           color="primary"
           fontWeight={"bold"}
         >
-          Tambah Admin
+          Create Admin
         </Typography>
         <Box
           component="form"
@@ -89,7 +89,7 @@ export default function CreateAdminView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nama"
+                label="Name"
                 id="outlined-start-adornment"
                 sx={{ m: 1 }}
                 value={userName}
@@ -102,7 +102,7 @@ export default function CreateAdminView() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Kontak"
+                label="Phone Number"
                 id="outlined-start-adornment"
                 sx={{ m: 1 }}
                 value={userContact}
@@ -130,7 +130,7 @@ export default function CreateAdminView() {
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-multiple-name-label">
-                  Pilih Role
+                  Choice Role
                 </InputLabel>
                 <Select
                   labelId="demo-select-small-label"
@@ -144,7 +144,6 @@ export default function CreateAdminView() {
                     Admin
                   </MenuItem>
                   <MenuItem value={"superAdmin"}>Super Admin</MenuItem>
-                  <MenuItem value={"supplier"}>Supplier</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

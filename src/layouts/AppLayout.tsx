@@ -36,7 +36,7 @@ import { useAppContext } from "../context/app.context";
 import { IconMenus } from "../components/icon";
 import { useToken } from "../hooks/token";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -115,30 +115,6 @@ export default function AppLayout() {
 
   const menuItems = [];
 
-  const supplierMenus = [
-    { title: "Dashboard", link: "/", icon: <IconMenus.dashboard /> },
-    {
-      title: "Attendance",
-      link: "/attendances",
-      icon: <IconMenus.attendance />,
-    },
-    {
-      title: "Stores",
-      link: "/stores",
-      icon: <IconMenus.store />,
-    },
-    {
-      title: "Location",
-      link: "/location",
-      icon: <IconMenus.location />,
-    },
-    {
-      title: "Users",
-      link: "/users",
-      icon: <IconMenus.user />,
-    },
-  ];
-
   const adminMenus = [
     { title: "Dashboard", link: "/", icon: <IconMenus.dashboard /> },
     {
@@ -152,26 +128,21 @@ export default function AppLayout() {
       icon: <IconMenus.store />,
     },
     {
-      title: "Attendance",
+      title: "Attendances",
       link: "/attendances",
       icon: <IconMenus.attendance />,
     },
     {
-      title: "Users",
+      title: "Employees",
       link: "/users",
       icon: <IconMenus.user />,
-    },
-    {
-      title: "Admins",
-      link: "/admins",
-      icon: <IconMenus.admin />,
     },
   ];
 
   const superAdminMenus = [
     { title: "Dashboard", link: "/", icon: <IconMenus.dashboard /> },
     {
-      title: "Attendance",
+      title: "Attendances",
       link: "/attendances",
       icon: <IconMenus.attendance />,
     },
@@ -186,7 +157,7 @@ export default function AppLayout() {
       icon: <IconMenus.store />,
     },
     {
-      title: "Users",
+      title: "Employees",
       link: "/users",
       icon: <IconMenus.user />,
     },

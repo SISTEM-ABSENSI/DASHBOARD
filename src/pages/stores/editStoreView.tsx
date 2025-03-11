@@ -114,7 +114,7 @@ export default function EditStoreView() {
       <BreadCrumberStyle
         navigation={[
           {
-            label: "Store",
+            label: "Stores",
             link: "/stores",
             icon: <IconMenus.store fontSize="small" />,
           },
@@ -149,10 +149,11 @@ export default function EditStoreView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nama Toko"
+                label="Name"
                 value={storeName}
                 type="text"
                 fullWidth
+                placeholder="example: Store A"
                 onChange={(e) => {
                   setStoreName(e.target.value);
                 }}
@@ -160,10 +161,11 @@ export default function EditStoreView() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Alamat"
+                label="address"
                 value={storeAddress}
                 type="text"
                 fullWidth
+                placeholder="example: Jl. Raya "
                 onChange={(e) => {
                   setStoreAddress(e.target.value);
                 }}
@@ -172,6 +174,7 @@ export default function EditStoreView() {
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Latitude"
+                placeholder="example: -6.1754"
                 id="outlined-start-adornment"
                 value={storeLatitude}
                 fullWidth
@@ -184,6 +187,7 @@ export default function EditStoreView() {
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Longitude"
+                placeholder="example: 106.8272"
                 id="outlined-start-adornment"
                 value={storeLongitude}
                 type="text"
@@ -200,7 +204,7 @@ export default function EditStoreView() {
                 variant="contained"
                 disabled={!storeLongitude || !storeLatitude}
               >
-                Lihat Peta
+                View Map
               </Button>
             </Grid>
           </Grid>

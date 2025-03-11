@@ -106,7 +106,7 @@ export default function EditAdminView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nama"
+                label="Name"
                 id="outlined-start-adornment"
                 sx={{ m: 1 }}
                 value={userName}
@@ -117,7 +117,7 @@ export default function EditAdminView() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Kontak"
+                label="Phone Number"
                 id="outlined-start-adornment"
                 sx={{ m: 1 }}
                 value={userContact}
@@ -140,7 +140,7 @@ export default function EditAdminView() {
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-multiple-name-label">
-                  Pilih Role
+                  Choice Role
                 </InputLabel>
                 <Select
                   labelId="demo-select-small-label"
@@ -152,7 +152,6 @@ export default function EditAdminView() {
                 >
                   <MenuItem value="admin">Admin</MenuItem>
                   <MenuItem value="superAdmin">Super Admin</MenuItem>
-                  <MenuItem value="supplier">Supplier</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
