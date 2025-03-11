@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
@@ -77,19 +76,13 @@ export default function ListStoreView() {
     {
       field: "storeName",
       flex: 1,
-      renderHeader: () => <strong>{"NAMA"}</strong>,
-      editable: true,
-    },
-    {
-      field: "storeName",
-      flex: 1,
-      renderHeader: () => <strong>{"NAMA"}</strong>,
+      renderHeader: () => <strong>{"NAME"}</strong>,
       editable: true,
     },
     {
       field: "storeAddress",
       flex: 1,
-      renderHeader: () => <strong>{"ALAMAT"}</strong>,
+      renderHeader: () => <strong>{"ADDRESS"}</strong>,
       editable: true,
     },
     {
@@ -177,7 +170,7 @@ export default function ListStoreView() {
       <BreadCrumberStyle
         navigation={[
           {
-            label: "Clinic",
+            label: "Stores",
             link: "/stores",
             icon: <IconMenus.store fontSize="small" />,
           },
@@ -219,9 +212,7 @@ export default function ListStoreView() {
       <ModalStyle
         openModal={openModalDelete}
         handleModalOnCancel={() => setOpenModalDelete(false)}
-        message={
-          "Apakah anda yakin ingin menghapus " + modalDeleteData?.storeName
-        }
+        message={`Are you sure you want to delete ${modalDeleteData?.storeName}?`}
         handleModal={() => {
           handleDeleteListItem(modalDeleteData?.storeId + "");
           setOpenModalDelete(!openModalDelete);

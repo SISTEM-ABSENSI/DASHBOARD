@@ -22,7 +22,6 @@ import {
 } from "@mui/icons-material";
 import { blue } from "@mui/material/colors";
 
-// Fix the Leaflet marker icon paths
 const defaultIcon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
@@ -100,10 +99,10 @@ export default function LocationView() {
                 <LocationIcon sx={{ color: blue[600], fontSize: 28 }} />
                 <Stack spacing={0.5}>
                   <Typography variant="h5" fontWeight="600">
-                    Clinic Locations
+                    Store Locations
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {filteredStores.length} clinics found
+                    {filteredStores.length} stores found
                   </Typography>
                 </Stack>
               </Stack>

@@ -49,7 +49,6 @@ const DetailAttendance: React.FC = () => {
     const result = await handleGetRequest({
       path: "/attendances/detail/" + attendanceId,
     });
-    console.log(result);
     if (result) {
       setDetailAttendance(result);
     }
@@ -62,8 +61,6 @@ const DetailAttendance: React.FC = () => {
         attendanceId,
     });
 
-    console.log(attendanceId);
-    console.log(result);
     if (result?.items && Array.isArray(result.items)) {
       setDetailAttendanceHistory(result.items);
     }
@@ -159,7 +156,7 @@ const DetailAttendance: React.FC = () => {
                   gutterBottom
                   sx={{ fontWeight: "bold", color: "#333" }}
                 >
-                  Clinic
+                  Store
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 1 }}>
                   <strong>Name:</strong> {detailAttendance.store.storeName}

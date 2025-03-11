@@ -114,7 +114,7 @@ export default function EditStoreView() {
       <BreadCrumberStyle
         navigation={[
           {
-            label: "Clinic",
+            label: "Stores",
             link: "/stores",
             icon: <IconMenus.store fontSize="small" />,
           },
@@ -136,7 +136,7 @@ export default function EditStoreView() {
           color="primary"
           fontWeight={"bold"}
         >
-          Edit Clinic
+          Edit Store
         </Typography>
         <Box
           component="form"
@@ -149,11 +149,11 @@ export default function EditStoreView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nama Clinic"
+                label="Name"
                 value={storeName}
                 type="text"
                 fullWidth
-                placeholder="example: Clinic A"
+                placeholder="example: Store A"
                 onChange={(e) => {
                   setStoreName(e.target.value);
                 }}
@@ -161,11 +161,11 @@ export default function EditStoreView() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Alamat"
+                label="address"
                 value={storeAddress}
                 type="text"
                 fullWidth
-                placeholder="example: Jl. Raya"
+                placeholder="example: Jl. Raya "
                 onChange={(e) => {
                   setStoreAddress(e.target.value);
                 }}
@@ -204,7 +204,7 @@ export default function EditStoreView() {
                 variant="contained"
                 disabled={!storeLongitude || !storeLatitude}
               >
-                Lihat Peta
+                View Map
               </Button>
             </Grid>
           </Grid>

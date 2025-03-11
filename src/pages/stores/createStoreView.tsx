@@ -96,7 +96,7 @@ export default function CreateStoreView() {
       <BreadCrumberStyle
         navigation={[
           {
-            label: "Clinic",
+            label: "Store",
             link: "/stores",
             icon: <IconMenus.store fontSize="small" />,
           },
@@ -118,7 +118,7 @@ export default function CreateStoreView() {
           color="primary"
           fontWeight={"bold"}
         >
-          Create Clinic
+          Create Store
         </Typography>
         <Box
           component="form"
@@ -131,7 +131,7 @@ export default function CreateStoreView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nama Clinic"
+                label="Name"
                 placeholder="example: Clinic A"
                 id="outlined-start-adornment"
                 value={storeName}
@@ -187,7 +187,7 @@ export default function CreateStoreView() {
                 variant="contained"
                 disabled={!storeLongitude || !storeLatitude}
               >
-                Lihat Peta
+                View Map
               </Button>
             </Grid>
           </Grid>

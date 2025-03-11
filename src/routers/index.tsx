@@ -13,7 +13,7 @@ import EditProfileView from "../pages/myProfile/EditProfileView";
 import ListStoreView from "../pages/stores/listStoreView";
 import CreateStoreView from "../pages/stores/createStoreView";
 import EditStoreView from "../pages/stores/editStoreView";
-import ListUserView from "../pages/user/ListUserView";
+import ListEmployeeView from "../pages/employees/ListEmployeeView";
 import ListAttendanceView from "../pages/attendance/listAttendanceView";
 import LocationView from "../pages/location/locationView";
 import ListAttendanceHistoryView from "../pages/attendance/listAttendanceHistoryView";
@@ -28,10 +28,10 @@ const getProtectedRouters = (role: string) => {
         path: "/",
         element: <DashboardView />,
       },
-      // spg router
+      // employee router
       {
         path: "/users",
-        element: <ListUserView />,
+        element: <ListEmployeeView />,
       },
 
       // attendance router
@@ -89,7 +89,7 @@ const getProtectedRouters = (role: string) => {
     // user router
     {
       path: "/users",
-      element: <ListUserView />,
+      element: <ListEmployeeView />,
     },
 
     // attendance router
@@ -102,7 +102,6 @@ const getProtectedRouters = (role: string) => {
       path: "/attendances/detail/:attendanceId",
       element: <DetailAttendance />,
     },
-
 
     {
       path: "/attendances/histories/:attendanceHistoryUserId",

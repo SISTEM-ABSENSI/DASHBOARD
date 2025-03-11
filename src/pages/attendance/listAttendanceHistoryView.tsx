@@ -32,7 +32,6 @@ export default function ListAttendanceHistoryView() {
       });
 
       if (result && result?.items) {
-        console.log(result?.items);
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }
@@ -51,7 +50,7 @@ export default function ListAttendanceHistoryView() {
     {
       field: "attendanceHistoryTime",
       flex: 1,
-      renderHeader: () => <strong>{"Time"}</strong>,
+      renderHeader: () => <strong>{"TIME"}</strong>,
       valueFormatter: (item) => convertTime(item.value),
       editable: true,
     },

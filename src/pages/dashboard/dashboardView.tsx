@@ -6,13 +6,12 @@ import { useHttp } from "../../hooks/http";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css"; // Leaflet CSS untuk map
+import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { IStoreModel } from "../../models/storeModel";
 import { IStatisticModel } from "../../models/statisticModel";
 import { LocationOn as LocationIcon } from "@mui/icons-material";
 
-// Fix the Leaflet marker icon paths
 const defaultIcon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
@@ -75,13 +74,11 @@ const DashboardCard = ({
   </Card>
 );
 
-// DashboardView dengan Statistik dan Peta Toko
 const DashboardView = () => {
   const { handleGetRequest } = useHttp();
   const navigation = useNavigate();
   const [isLoading, setIsloading] = useState(true);
 
-  // State untuk Statistik
   const [statistic, setStatistic] = useState<IStatisticModel>({
     totalUsers: 0,
     totalAdmins: 0,
@@ -89,17 +86,14 @@ const DashboardView = () => {
     totalStores: 0,
   });
 
-  // State untuk Koordinat Peta
   const [coordinates, setCoordinates] = useState<IStoreModel[]>([]);
 
-  // Fungsi untuk mengambil Statistik Dashboard
   const handleGetStatistic = async () => {
     try {
       const result = await handleGetRequest({
         path: "/statistic",
       });
 
-      console.log(result);
       if (result) {
         setStatistic(result);
       }
@@ -108,7 +102,6 @@ const DashboardView = () => {
     }
   };
 
-  // Fungsi untuk mengambil Koordinat Toko untuk Peta
   const handleGetStores = async () => {
     try {
       const result = await handleGetRequest({
@@ -161,7 +154,7 @@ const DashboardView = () => {
           <Grid item md={3} sm={6} xs={12}>
             <DashboardCard
               icon={IconMenus.user}
-              title="Employee"
+              title="Employees"
               value={statistic.totalUsers}
               color={blue[500]}
               onClick={() => navigation("/users")}
@@ -191,7 +184,7 @@ const DashboardView = () => {
           <Grid item md={3} sm={6} xs={12}>
             <DashboardCard
               icon={IconMenus.store}
-              title="Clinics"
+              title="Stores"
               value={statistic.totalStores}
               color={orange[500]}
               onClick={() => navigation("/stores")}
@@ -225,12 +218,12 @@ const DashboardView = () => {
                     }}
                   />
                   <Typography variant="h6" fontWeight="600">
-                    Clinic Locations
+                    Store Locations
                   </Typography>
                 </Stack>
 
                 <Typography variant="body2" color="text.secondary">
-                  {coordinates.length} clinics
+                  {coordinates.length} Stores
                 </Typography>
               </Stack>
 

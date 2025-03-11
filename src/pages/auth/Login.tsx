@@ -29,8 +29,6 @@ export default function LoginView() {
         body: userPayload,
       });
 
-      console.log(result.data);
-
       if (result && result?.data) {
         setToken(result.data?.token);
         window.location.reload();

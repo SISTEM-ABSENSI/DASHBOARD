@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
@@ -77,12 +76,12 @@ export default function ListAdminView() {
     {
       field: "userName",
       flex: 1,
-      renderHeader: () => <strong>{"NAMA"}</strong>,
+      renderHeader: () => <strong>{"NAME"}</strong>,
       editable: true,
     },
     {
       field: "userRole",
-      renderHeader: () => <strong>{"Role"}</strong>,
+      renderHeader: () => <strong>{"ROLE"}</strong>,
       flex: 1,
       editable: true,
       type: "singleSelect",
@@ -90,12 +89,12 @@ export default function ListAdminView() {
     },
     {
       field: "userContact",
-      renderHeader: () => <strong>{"KONTAK"}</strong>,
+      renderHeader: () => <strong>{"PHONE"}</strong>,
       editable: true,
     },
     {
       field: "createdAt",
-      renderHeader: () => <strong>{"DIBUAT PADA"}</strong>,
+      renderHeader: () => <strong>{"CREATED AT"}</strong>,
       editable: true,
       valueFormatter: (item) => convertTime(item.value),
     },
@@ -120,12 +119,6 @@ export default function ListAdminView() {
             onClick={() => handleOpenModalDelete(row)}
             color="inherit"
           />,
-          // <GridActionsCellItem
-          //   icon={<MoreOutlined color="info" />}
-          //   label="Detail"
-          //   onClick={() => navigation("/admins/detail/" + row.id)}
-          //   color="inherit"
-          // />,
         ];
       },
     },
@@ -142,7 +135,7 @@ export default function ListAdminView() {
             variant="outlined"
             onClick={() => navigation("/admins/create")}
           >
-            Tambah Admin
+            Create Admin
           </Button>
         </Stack>
         <Stack direction={"row"} spacing={1} alignItems={"center"}>
@@ -207,9 +200,7 @@ export default function ListAdminView() {
       <ModalStyle
         openModal={openModalDelete}
         handleModalOnCancel={() => setOpenModalDelete(false)}
-        message={
-          "Apakah anda yakin ingin menghapus " + modalDeleteData?.userName
-        }
+        message={`Are you sure you want to delete ${modalDeleteData?.userName}?`}
         handleModal={() => {
           handleDeleteAdmin(modalDeleteData?.userId + "");
           setOpenModalDelete(!openModalDelete);

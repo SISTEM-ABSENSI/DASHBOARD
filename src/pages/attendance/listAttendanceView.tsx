@@ -45,7 +45,6 @@ export default function ListAttendanceView() {
       });
 
       if (result && result?.items) {
-        console.log(result?.items);
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }
@@ -71,7 +70,7 @@ export default function ListAttendanceView() {
     {
       field: "storeName",
       flex: 1,
-      renderHeader: () => <strong>{"Clinic"}</strong>,
+      renderHeader: () => <strong>{"Store"}</strong>,
       valueGetter: (params) => params.row.store?.storeName || "",
       editable: true,
     },
