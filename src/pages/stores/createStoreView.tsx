@@ -131,8 +131,8 @@ export default function CreateStoreView() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Nama Toko"
-                placeholder="example: Toko A"
+                label="Name"
+                placeholder="example: Clinic A"
                 id="outlined-start-adornment"
                 value={storeName}
                 fullWidth
@@ -143,7 +143,7 @@ export default function CreateStoreView() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Alamat Toko"
+                label="Alamat Clinic"
                 placeholder="example: Jl. Raya"
                 id="outlined-start-adornment"
                 value={storeAddress}
@@ -187,7 +187,7 @@ export default function CreateStoreView() {
                 variant="contained"
                 disabled={!storeLongitude || !storeLatitude}
               >
-                Lihat Peta
+                View Map
               </Button>
             </Grid>
           </Grid>

@@ -128,12 +128,12 @@ export default function AppLayout() {
       icon: <IconMenus.store />,
     },
     {
-      title: "Attendance",
+      title: "Attendances",
       link: "/attendances",
       icon: <IconMenus.attendance />,
     },
     {
-      title: "Users",
+      title: "Employees",
       link: "/users",
       icon: <IconMenus.user />,
     },
@@ -142,7 +142,7 @@ export default function AppLayout() {
   const superAdminMenus = [
     { title: "Dashboard", link: "/", icon: <IconMenus.dashboard /> },
     {
-      title: "Attendance",
+      title: "Attendances",
       link: "/attendances",
       icon: <IconMenus.attendance />,
     },
@@ -157,7 +157,7 @@ export default function AppLayout() {
       icon: <IconMenus.store />,
     },
     {
-      title: "Users",
+      title: "Employees",
       link: "/users",
       icon: <IconMenus.user />,
     },

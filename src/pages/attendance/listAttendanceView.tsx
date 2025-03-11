@@ -45,12 +45,11 @@ export default function ListAttendanceView() {
       });
 
       if (result && result?.items) {
-        console.log(result?.items);
         setTableData(result?.items);
         setRowCount(result.totalItems);
       }
-    } catch (error: any) {
-      console.log(error);
+    } catch (error: unknown) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -64,24 +63,10 @@ export default function ListAttendanceView() {
     {
       field: "userName",
       flex: 1,
-      renderHeader: () => <strong>{"User"}</strong>,
+      renderHeader: () => <strong>{"Employee"}</strong>,
       valueGetter: (params) => params.row.user?.userName || "",
       editable: true,
     },
-    // {
-    //   field: "productImage",
-    //   flex: 1,
-    //   renderHeader: () => <strong>{"Image"}</strong>,
-    //   renderCell: (params) => (
-    //     <img
-    //       src={params.value}
-    //       style={{
-    //         width: 80,
-    //         height: 80,
-    //       }}
-    //     />
-    //   ),
-    // },
     {
       field: "storeName",
       flex: 1,
@@ -97,7 +82,7 @@ export default function ListAttendanceView() {
     },
     {
       field: "scheduleStatus",
-      renderHeader: () => <strong>{"STATUS"}</strong>,
+      renderHeader: () => <strong>{"Status"}</strong>,
       flex: 1,
       editable: true,
       renderCell: (params) => {
@@ -132,14 +117,14 @@ export default function ListAttendanceView() {
     },
     {
       field: "scheduleStartDate",
-      renderHeader: () => <strong>{"START"}</strong>,
+      renderHeader: () => <strong>{"Start"}</strong>,
       flex: 1,
       editable: true,
       valueFormatter: (item) => convertTime(item.value),
     },
     {
       field: "scheduleEndDate",
-      renderHeader: () => <strong>{"END"}</strong>,
+      renderHeader: () => <strong>{"End"}</strong>,
       flex: 1,
       editable: true,
       valueFormatter: (item) => convertTime(item.value),
@@ -156,9 +141,7 @@ export default function ListAttendanceView() {
             label={"Detail"}
             color={"success"}
             variant="outlined"
-            onClick={() =>
-              navigation("/attendances/histories/" + row.scheduleUserId)
-            }
+            onClick={() => navigation("/attendances/detail/" + row.scheduleId)}
           />,
         ];
       },
@@ -224,7 +207,7 @@ export default function ListAttendanceView() {
         <DataGrid
           rows={tableData}
           columns={columns}
-          getRowId={(row: any) => row.scheduleId}
+          getRowId={(row: any) => row?.scheduleId}
           editMode="row"
           autoHeight
           sx={{ padding: 2 }}
